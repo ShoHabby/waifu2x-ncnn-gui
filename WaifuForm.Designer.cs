@@ -268,6 +268,7 @@
             this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.groupBoxSettings);
             this.Controls.Add(this.groupBoxInput);
+            this.MaximumSize = new System.Drawing.Size(1200, 600);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "WaifuForm";
             this.Text = "Waifu2x";

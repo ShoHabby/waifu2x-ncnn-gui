@@ -111,9 +111,7 @@ public partial class WaifuForm : Form
         this.ScaleIndex   = Settings.Default.ScaleIndex;
         this.DenoiseIndex = Settings.Default.DenoiseIndex;
         this.FormatIndex  = Settings.Default.FormatIndex;
-
-        this.Width  = Settings.Default.Width;
-        this.Height = Settings.Default.Height;
+        this.Width        = Settings.Default.Width;
     }
 
     /// <summary>
@@ -192,9 +190,7 @@ public partial class WaifuForm : Form
         Settings.Default.ScaleIndex   = this.ScaleIndex;
         Settings.Default.DenoiseIndex = this.DenoiseIndex;
         Settings.Default.FormatIndex  = this.FormatIndex;
-
-        Settings.Default.Width  = this.Width;
-        Settings.Default.Height = this.Height;
+        Settings.Default.Width        = this.Width;
 
         // Save before closing
         Settings.Default.Save();

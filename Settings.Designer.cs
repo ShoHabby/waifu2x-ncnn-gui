@@ -106,17 +106,5 @@ namespace Waifu2x {
                 this["Width"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
-        public int Height {
-            get {
-                return ((int)(this["Height"]));
-            }
-            set {
-                this["Height"] = value;
-            }
-        }
     }
 }

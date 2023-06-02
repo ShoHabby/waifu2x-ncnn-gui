@@ -23,8 +23,5 @@
     <Setting Name="Width" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">800</Value>
     </Setting>
-    <Setting Name="Height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">800</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
