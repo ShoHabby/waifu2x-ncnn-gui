@@ -350,3 +350,5 @@ MigrationBackup/
 
 # Custom
 dist/
+.idea/
+[Bb]uild/

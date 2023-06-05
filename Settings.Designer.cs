@@ -37,7 +37,7 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\")]
         public string Input {
             get {
                 return ((string)(this["Input"]));
@@ -104,6 +104,18 @@ namespace Waifu2x {
             }
             set {
                 this["Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Grayscale {
+            get {
+                return ((bool)(this["Grayscale"]));
+            }
+            set {
+                this["Grayscale"] = value;
             }
         }
     }

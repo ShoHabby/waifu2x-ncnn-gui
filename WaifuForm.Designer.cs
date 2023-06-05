@@ -49,6 +49,7 @@
             this.comboBoxScale = new System.Windows.Forms.ComboBox();
             this.buttonRun = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.checkBoxGrayscale = new System.Windows.Forms.CheckBox();
             this.groupBoxInput.SuspendLayout();
             this.groupBoxSettings.SuspendLayout();
             this.SuspendLayout();
@@ -153,6 +154,7 @@
             // 
             this.groupBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxSettings.Controls.Add(this.checkBoxGrayscale);
             this.groupBoxSettings.Controls.Add(this.labelFormat);
             this.groupBoxSettings.Controls.Add(this.comboBoxFormat);
             this.groupBoxSettings.Controls.Add(this.labelDenoising);
@@ -161,7 +163,7 @@
             this.groupBoxSettings.Controls.Add(this.comboBoxScale);
             this.groupBoxSettings.Location = new System.Drawing.Point(12, 284);
             this.groupBoxSettings.Name = "groupBoxSettings";
-            this.groupBoxSettings.Size = new System.Drawing.Size(752, 118);
+            this.groupBoxSettings.Size = new System.Drawing.Size(752, 149);
             this.groupBoxSettings.TabIndex = 7;
             this.groupBoxSettings.TabStop = false;
             this.groupBoxSettings.Text = "Settings";
@@ -240,7 +242,7 @@
             // 
             this.buttonRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRun.Location = new System.Drawing.Point(12, 408);
+            this.buttonRun.Location = new System.Drawing.Point(12, 438);
             this.buttonRun.Name = "buttonRun";
             this.buttonRun.Size = new System.Drawing.Size(752, 80);
             this.buttonRun.TabIndex = 9;
@@ -252,24 +254,34 @@
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(12, 494);
+            this.progressBar.Location = new System.Drawing.Point(12, 524);
             this.progressBar.MarqueeAnimationSpeed = 30;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(752, 30);
             this.progressBar.Step = 50;
             this.progressBar.TabIndex = 11;
             // 
+            // checkBoxGrayscale
+            // 
+            this.checkBoxGrayscale.AutoSize = true;
+            this.checkBoxGrayscale.Location = new System.Drawing.Point(9, 108);
+            this.checkBoxGrayscale.Name = "checkBoxGrayscale";
+            this.checkBoxGrayscale.Size = new System.Drawing.Size(230, 34);
+            this.checkBoxGrayscale.TabIndex = 8;
+            this.checkBoxGrayscale.Text = "Convert to Grayscale";
+            this.checkBoxGrayscale.UseVisualStyleBackColor = true;
+            // 
             // WaifuForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(776, 536);
+            this.ClientSize = new System.Drawing.Size(776, 566);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.groupBoxSettings);
             this.Controls.Add(this.groupBoxInput);
-            this.MaximumSize = new System.Drawing.Size(1200, 600);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.MaximumSize = new System.Drawing.Size(1200, 630);
+            this.MinimumSize = new System.Drawing.Size(800, 630);
             this.Name = "WaifuForm";
             this.Text = "Waifu2x";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WaifuForm_FormClosed);
@@ -302,5 +314,6 @@
         private Label labelScale;
         private Button buttonRun;
         private ProgressBar progressBar;
+        private CheckBox checkBoxGrayscale;
     }
 }

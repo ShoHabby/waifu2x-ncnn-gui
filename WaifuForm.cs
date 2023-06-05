@@ -6,6 +6,7 @@ public partial class WaifuForm : Form
 {
     #region Fields
     private Process? waifu;
+    private Process? grayscale;
     #endregion
 
     #region Properties
@@ -89,6 +90,15 @@ public partial class WaifuForm : Form
     /// Selected output format
     /// </summary>
     public string Format => this.comboBoxFormat.SelectedItem.ToString()!.ToLower();
+
+    /// <summary>
+    /// If files should be converted to grayscale after waifu2x runs
+    /// </summary>
+    public bool Grayscale
+    {
+        get => this.checkBoxGrayscale.Checked;
+        set => this.checkBoxGrayscale.Checked = value;
+    }
     #endregion
 
     #region Constructors
@@ -111,6 +121,7 @@ public partial class WaifuForm : Form
         this.ScaleIndex   = Settings.Default.ScaleIndex;
         this.DenoiseIndex = Settings.Default.DenoiseIndex;
         this.FormatIndex  = Settings.Default.FormatIndex;
+        this.Grayscale    = Settings.Default.Grayscale;
         this.Width        = Settings.Default.Width;
     }
 
@@ -131,9 +142,30 @@ public partial class WaifuForm : Form
             }
         };
 
-        this.waifu.Exited += ProcessExited;
+        this.waifu.Exited += WaifuExited;
         SetFormEnabled(false);
         this.waifu.Start();
+    }
+
+    /// <summary>
+    /// Runs the grayscale subprogram
+    /// </summary>
+    private void RunGrayscale()
+    {
+        this.grayscale = new()
+        {
+            EnableRaisingEvents = true,
+            StartInfo = new()
+            {
+                FileName = Path.GetFullPath(@"dist\grayscale.exe"),
+                Arguments = $"\"{this.Output}\"",
+                UseShellExecute = false
+            }
+        };
+
+        this.grayscale.Exited += GrayscaleExited;
+        SetFormEnabled(false);
+        this.grayscale.Start();
     }
 
     /// <summary>
@@ -190,6 +222,7 @@ public partial class WaifuForm : Form
         Settings.Default.ScaleIndex   = this.ScaleIndex;
         Settings.Default.DenoiseIndex = this.DenoiseIndex;
         Settings.Default.FormatIndex  = this.FormatIndex;
+        Settings.Default.Grayscale    = this.Grayscale;
         Settings.Default.Width        = this.Width;
 
         // Save before closing
@@ -249,12 +282,27 @@ public partial class WaifuForm : Form
         RunWaifu2x();
     }
 
-    private void ProcessExited(object? sender, EventArgs e)
+    private void WaifuExited(object? sender, EventArgs e)
     {
-        // Restore status from UI thread
-        Invoke(() => SetFormEnabled(true));
         this.waifu?.Dispose();
         this.waifu = null;
+
+        if (this.Grayscale)
+        {
+            Invoke(RunGrayscale);
+        }
+        else
+        {
+            Invoke(() => SetFormEnabled(true));
+        }
+    }
+
+    private void GrayscaleExited(object? sender, EventArgs e)
+    {
+        // Restore status from UI thread
+        this.grayscale?.Dispose();
+        this.grayscale = null;
+        Invoke(() => SetFormEnabled(true));
     }
     #endregion
 }

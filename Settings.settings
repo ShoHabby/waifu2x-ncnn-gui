@@ -6,7 +6,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Input" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">C:\</Value>
     </Setting>
     <Setting Name="OutputSuffix" Type="System.String" Scope="User">
       <Value Profile="(Default)">_waifu</Value>
@@ -22,6 +22,9 @@
     </Setting>
     <Setting Name="Width" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">800</Value>
+    </Setting>
+    <Setting Name="Grayscale" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
