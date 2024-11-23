@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Waifu2x" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -26,5 +26,9 @@
     <Setting Name="Grayscale" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="Height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">850</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
+

@@ -124,6 +124,7 @@ public partial class WaifuForm : Form
         this.FormatIndex  = Settings.Default.FormatIndex;
         this.Grayscale    = Settings.Default.Grayscale;
         this.Width        = Settings.Default.Width;
+        this.Height       = Settings.Default.Height;
     }
 
     /// <summary>
@@ -269,6 +270,7 @@ public partial class WaifuForm : Form
         Settings.Default.FormatIndex  = this.FormatIndex;
         Settings.Default.Grayscale    = this.Grayscale;
         Settings.Default.Width        = this.Width;
+        Settings.Default.Height       = this.Height;
 
         // Save before closing
         Settings.Default.Save();
