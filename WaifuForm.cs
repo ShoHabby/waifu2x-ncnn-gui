@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using ImageMagick;
 
 namespace Waifu2x;
 
@@ -6,7 +7,7 @@ public partial class WaifuForm : Form
 {
     #region Fields
     private Process? waifu;
-    private Process? grayscale;
+    private Task? grayscale;
     #endregion
 
     #region Properties
@@ -61,7 +62,7 @@ public partial class WaifuForm : Form
     /// <summary>
     /// Selected scale factor
     /// </summary>
-    public string ScaleFactor => this.comboBoxScale.SelectedItem.ToString()!;
+    public string ScaleFactor => this.comboBoxScale.SelectedItem?.ToString()!;
 
     /// <summary>
     /// Selected denoise index
@@ -75,7 +76,7 @@ public partial class WaifuForm : Form
     /// <summary>
     /// Selected denoise level
     /// </summary>
-    public string DenoiseLevel => this.comboBoxDenoising.SelectedItem.ToString()!;
+    public string DenoiseLevel => this.comboBoxDenoising.SelectedItem?.ToString()!;
 
     /// <summary>
     /// Selected format index
@@ -89,7 +90,7 @@ public partial class WaifuForm : Form
     /// <summary>
     /// Selected output format
     /// </summary>
-    public string Format => this.comboBoxFormat.SelectedItem.ToString()!.ToLower();
+    public string Format => this.comboBoxFormat.SelectedItem?.ToString()!.ToLower()!;
 
     /// <summary>
     /// If files should be converted to grayscale after waifu2x runs
@@ -131,13 +132,14 @@ public partial class WaifuForm : Form
     /// ReSharper disable once InconsistentNaming
     private void RunWaifu2x()
     {
-        this.waifu = new()
+        AddLogMessage("Running Waifu process...");
+        this.waifu = new Process
         {
             EnableRaisingEvents = true,
-            StartInfo = new()
+            StartInfo = new ProcessStartInfo
             {
                 FileName = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
-                Arguments = $"-i \"{this.Input}\" -o \"{this.Output}\" -s {this.ScaleFactor} -n {this.DenoiseLevel} -f {this.Format} -v",
+                Arguments = $"""-i "{this.Input}" -o "{this.Output}" -s {this.ScaleFactor} -n {this.DenoiseLevel} -f {this.Format} -v""",
                 UseShellExecute = false
             }
         };
@@ -152,32 +154,65 @@ public partial class WaifuForm : Form
     /// </summary>
     private void RunGrayscale()
     {
-        this.grayscale = new()
+        AddLogMessage("Converting images to grayscale...");
+        if (!this.IsFolder)
         {
-            EnableRaisingEvents = true,
-            StartInfo = new()
-            {
-                FileName = Path.GetFullPath(@"dist\grayscale.exe"),
-                Arguments = $"\"{this.Output}\"",
-                UseShellExecute = false
-            }
-        };
+            SetFormEnabled(false);
+            ConvertToGray(new FileInfo(this.Output));
+            return;
+        }
 
-        this.grayscale.Exited += GrayscaleExited;
-        SetFormEnabled(false);
-        this.grayscale.Start();
+        SetFormEnabled(false, false);
+        DirectoryInfo outputDir = new(this.Output);
+        FileInfo[] files = outputDir.GetFiles($"*.{this.Format}");
+        this.progressBar.Maximum = files.Length;
+        this.grayscale           = Parallel.ForEachAsync(files, ConvertToGrayAsync);
+        this.grayscale.ContinueWith(GrayscaleCompleted);
     }
 
     /// <summary>
     /// Sets the form's working status
     /// </summary>
     /// <param name="enabled">If the form should be enabled or not</param>
-    private void SetFormEnabled(bool enabled)
+    /// <param name="useMarquee">If a marquee bar should be used while the form is disabled</param>
+    private void SetFormEnabled(bool enabled, bool useMarquee = true)
     {
         this.groupBoxInput.Enabled    = enabled;
         this.groupBoxSettings.Enabled = enabled;
         this.buttonRun.Enabled        = enabled;
-        this.progressBar.Style        = enabled ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
+        this.progressBar.Style        = !enabled && useMarquee ? ProgressBarStyle.Marquee : ProgressBarStyle.Continuous;
+    }
+
+    /// <summary>
+    /// Async gray conversion handler
+    /// </summary>
+    /// <param name="file">File to convert</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The conversion task</returns>
+    private ValueTask ConvertToGrayAsync(FileInfo file, CancellationToken cancellationToken)
+    {
+        ConvertToGray(file);
+        Invoke(() => this.progressBar.PerformStep());
+        return ValueTask.CompletedTask;
+    }
+
+    /// <summary>
+    /// Convert an image file to grayscale
+    /// </summary>
+    /// <param name="file">File to convert</param>
+    private void ConvertToGray(FileInfo file)
+    {
+        using MagickImage image = new(file);
+        image.Grayscale(PixelIntensityMethod.Average);
+        image.Write(file);
+        if (this.InvokeRequired)
+        {
+            Invoke(() => AddLogMessage($"{file.FullName} converted to grayscale"));
+        }
+        else
+        {
+            AddLogMessage($"{file.FullName} converted to grayscale");
+        }
     }
 
     /// <summary>
@@ -209,6 +244,16 @@ public partial class WaifuForm : Form
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Logs an message to the form log box
+    /// </summary>
+    /// <param name="message">Message to log</param>
+    private void AddLogMessage(string message)
+    {
+        this.logListBox.Items.Add(message);
+        this.logListBox.TopIndex = this.logListBox.Items.Count - 1;
     }
     #endregion
 
@@ -269,8 +314,8 @@ public partial class WaifuForm : Form
 
         try
         {
-            bool valid = this.IsFolder ? ValidateIO<DirectoryInfo>(new(this.Input), new(this.Output), "folder")
-                                       : ValidateIO<FileInfo>(new(this.Input), new(this.Output), "file");
+            bool valid = this.IsFolder ? ValidateIO(new DirectoryInfo(this.Input), new DirectoryInfo(this.Output), "folder")
+                                       : ValidateIO(new FileInfo(this.Input), new FileInfo(this.Output), "file");
             if (!valid) return;
         }
         catch (ArgumentException exception)
@@ -295,14 +340,20 @@ public partial class WaifuForm : Form
         {
             Invoke(() => SetFormEnabled(true));
         }
+        Invoke(() => AddLogMessage("Waifu process completed"));
     }
 
-    private void GrayscaleExited(object? sender, EventArgs e)
+    private void GrayscaleCompleted(Task task)
     {
         // Restore status from UI thread
         this.grayscale?.Dispose();
         this.grayscale = null;
-        Invoke(() => SetFormEnabled(true));
+        Invoke(() =>
+        {
+            SetFormEnabled(true);
+            this.progressBar.Value = 0;
+            AddLogMessage("All images converted to grayscale");
+        });
     }
     #endregion
 }

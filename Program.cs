@@ -1,3 +1,5 @@
+using ImageMagick;
+
 namespace Waifu2x;
 
 internal static class Program
@@ -9,6 +11,7 @@ internal static class Program
     private static void Main()
     {
         ApplicationConfiguration.Initialize();
+        MagickNET.Initialize();
         Application.Run(new WaifuForm());
     }
 }
