@@ -167,8 +167,7 @@ public partial class WaifuForm : Form
         DirectoryInfo outputDir = new(this.Output);
         FileInfo[] files = outputDir.GetFiles($"*.{this.Format}");
         this.progressBar.Maximum = files.Length;
-        this.grayscale           = Parallel.ForEachAsync(files, ConvertToGrayAsync);
-        this.grayscale.ContinueWith(GrayscaleCompleted);
+        this.grayscale = Parallel.ForEachAsync(files, ConvertToGrayAsync).ContinueWith(GrayscaleCompleted);
     }
 
     /// <summary>
@@ -222,10 +221,16 @@ public partial class WaifuForm : Form
     /// <typeparam name="T">Type of IO (folder/file)</typeparam>
     /// <param name="input">Input path</param>
     /// <param name="output">Output path</param>
-    /// <param name="type">IO type name</param>
     /// <returns><see langword="true"/> if the paths are valid, otherwise <see langword="false"/></returns>
-    private static bool ValidateIO<T>(T input, T output, string type) where T : FileSystemInfo
+    private static bool ValidateIO<T>(T input, T output) where T : FileSystemInfo
     {
+        string type = input switch
+        {
+            FileInfo      => "file",
+            DirectoryInfo => "folder",
+            _             => "object"
+        };
+
         if (!input.Exists)
         {
             MessageBox.Show($"The selected input {type} does not exist.", "Error");
@@ -316,8 +321,8 @@ public partial class WaifuForm : Form
 
         try
         {
-            bool valid = this.IsFolder ? ValidateIO(new DirectoryInfo(this.Input), new DirectoryInfo(this.Output), "folder")
-                                       : ValidateIO(new FileInfo(this.Input), new FileInfo(this.Output), "file");
+            bool valid = this.IsFolder ? ValidateIO(new DirectoryInfo(this.Input), new DirectoryInfo(this.Output))
+                                       : ValidateIO(new FileInfo(this.Input), new FileInfo(this.Output));
             if (!valid) return;
         }
         catch (ArgumentException exception)
@@ -333,6 +338,7 @@ public partial class WaifuForm : Form
     {
         this.waifu?.Dispose();
         this.waifu = null;
+        Invoke(() => AddLogMessage("Waifu process completed"));
 
         if (this.Grayscale)
         {
@@ -342,7 +348,6 @@ public partial class WaifuForm : Form
         {
             Invoke(() => SetFormEnabled(true));
         }
-        Invoke(() => AddLogMessage("Waifu process completed"));
     }
 
     private void GrayscaleCompleted(Task task)
