@@ -1,4 +1,5 @@
 using ImageMagick;
+using Waifu2x.Forms;
 
 namespace Waifu2x;
 

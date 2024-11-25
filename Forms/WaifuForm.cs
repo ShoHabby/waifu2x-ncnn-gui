@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using ImageMagick;
 
-namespace Waifu2x;
+namespace Waifu2x.Forms;
 
 public partial class WaifuForm : Form
 {
