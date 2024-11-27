@@ -129,5 +129,53 @@ namespace Waifu2x {
                 this["Height"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TTA {
+            get {
+                return ((bool)(this["TTA"]));
+            }
+            set {
+                this["TTA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int Decode {
+            get {
+                return ((int)(this["Decode"]));
+            }
+            set {
+                this["Decode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int Upscale {
+            get {
+                return ((int)(this["Upscale"]));
+            }
+            set {
+                this["Upscale"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int Encode {
+            get {
+                return ((int)(this["Encode"]));
+            }
+            set {
+                this["Encode"] = value;
+            }
+        }
     }
 }

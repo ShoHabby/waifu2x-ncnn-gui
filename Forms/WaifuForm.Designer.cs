@@ -29,30 +29,40 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WaifuForm));
-            folderBrowserInput  = new System.Windows.Forms.FolderBrowserDialog();
-            labelInput          = new System.Windows.Forms.Label();
-            textBoxInput        = new System.Windows.Forms.TextBox();
-            buttonBrowseInput   = new System.Windows.Forms.Button();
-            labelOutputSuffix   = new System.Windows.Forms.Label();
-            textBoxOutputSuffix = new System.Windows.Forms.TextBox();
-            groupBoxInput       = new System.Windows.Forms.GroupBox();
-            radioButtonFile     = new System.Windows.Forms.RadioButton();
-            radioButtonFolder   = new System.Windows.Forms.RadioButton();
-            labelInputType      = new System.Windows.Forms.Label();
-            openFileInput       = new System.Windows.Forms.OpenFileDialog();
-            groupBoxSettings    = new System.Windows.Forms.GroupBox();
-            checkBoxGrayscale   = new System.Windows.Forms.CheckBox();
-            labelFormat         = new System.Windows.Forms.Label();
-            comboBoxFormat      = new System.Windows.Forms.ComboBox();
-            labelDenoising      = new System.Windows.Forms.Label();
-            comboBoxDenoising   = new System.Windows.Forms.ComboBox();
-            labelScale          = new System.Windows.Forms.Label();
-            comboBoxScale       = new System.Windows.Forms.ComboBox();
-            buttonRun           = new System.Windows.Forms.Button();
-            progressBar         = new System.Windows.Forms.ProgressBar();
-            logListBox          = new System.Windows.Forms.ListBox();
+            folderBrowserInput   = new System.Windows.Forms.FolderBrowserDialog();
+            labelInput           = new System.Windows.Forms.Label();
+            textBoxInput         = new System.Windows.Forms.TextBox();
+            buttonBrowseInput    = new System.Windows.Forms.Button();
+            labelOutputSuffix    = new System.Windows.Forms.Label();
+            textBoxOutputSuffix  = new System.Windows.Forms.TextBox();
+            groupBoxInput        = new System.Windows.Forms.GroupBox();
+            radioButtonFile      = new System.Windows.Forms.RadioButton();
+            radioButtonFolder    = new System.Windows.Forms.RadioButton();
+            labelInputType       = new System.Windows.Forms.Label();
+            openFileInput        = new System.Windows.Forms.OpenFileDialog();
+            groupBoxSettings     = new System.Windows.Forms.GroupBox();
+            numericUpDownSave    = new System.Windows.Forms.NumericUpDown();
+            numericUpDownUpscale = new System.Windows.Forms.NumericUpDown();
+            numericUpDownLoad    = new System.Windows.Forms.NumericUpDown();
+            labelSaveThreads     = new System.Windows.Forms.Label();
+            labelUpscaleThreads  = new System.Windows.Forms.Label();
+            labelLoadThreads     = new System.Windows.Forms.Label();
+            checkBoxTTA          = new System.Windows.Forms.CheckBox();
+            checkBoxGrayscale    = new System.Windows.Forms.CheckBox();
+            labelFormat          = new System.Windows.Forms.Label();
+            comboBoxFormat       = new System.Windows.Forms.ComboBox();
+            labelDenoising       = new System.Windows.Forms.Label();
+            comboBoxDenoising    = new System.Windows.Forms.ComboBox();
+            labelScale           = new System.Windows.Forms.Label();
+            comboBoxScale        = new System.Windows.Forms.ComboBox();
+            buttonRun            = new System.Windows.Forms.Button();
+            progressBar          = new System.Windows.Forms.ProgressBar();
+            logListBox           = new System.Windows.Forms.ListBox();
             groupBoxInput.SuspendLayout();
             groupBoxSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSave).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownUpscale).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownLoad).BeginInit();
             SuspendLayout();
             // 
             // labelInput
@@ -151,6 +161,13 @@
             // groupBoxSettings
             // 
             groupBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            groupBoxSettings.Controls.Add(numericUpDownSave);
+            groupBoxSettings.Controls.Add(numericUpDownUpscale);
+            groupBoxSettings.Controls.Add(numericUpDownLoad);
+            groupBoxSettings.Controls.Add(labelSaveThreads);
+            groupBoxSettings.Controls.Add(labelUpscaleThreads);
+            groupBoxSettings.Controls.Add(labelLoadThreads);
+            groupBoxSettings.Controls.Add(checkBoxTTA);
             groupBoxSettings.Controls.Add(checkBoxGrayscale);
             groupBoxSettings.Controls.Add(labelFormat);
             groupBoxSettings.Controls.Add(comboBoxFormat);
@@ -160,15 +177,78 @@
             groupBoxSettings.Controls.Add(comboBoxScale);
             groupBoxSettings.Location = new System.Drawing.Point(12, 284);
             groupBoxSettings.Name     = "groupBoxSettings";
-            groupBoxSettings.Size     = new System.Drawing.Size(752, 149);
+            groupBoxSettings.Size     = new System.Drawing.Size(752, 221);
             groupBoxSettings.TabIndex = 7;
             groupBoxSettings.TabStop  = false;
             groupBoxSettings.Text     = "Settings";
             // 
+            // numericUpDownSave
+            // 
+            numericUpDownSave.Location = new System.Drawing.Point(495, 138);
+            numericUpDownSave.Minimum  = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownSave.Name     = "numericUpDownSave";
+            numericUpDownSave.Size     = new System.Drawing.Size(212, 35);
+            numericUpDownSave.TabIndex = 15;
+            numericUpDownSave.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // numericUpDownUpscale
+            // 
+            numericUpDownUpscale.Location = new System.Drawing.Point(252, 138);
+            numericUpDownUpscale.Minimum  = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownUpscale.Name     = "numericUpDownUpscale";
+            numericUpDownUpscale.Size     = new System.Drawing.Size(212, 35);
+            numericUpDownUpscale.TabIndex = 14;
+            numericUpDownUpscale.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // numericUpDownLoad
+            // 
+            numericUpDownLoad.Location = new System.Drawing.Point(9, 138);
+            numericUpDownLoad.Minimum  = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownLoad.Name     = "numericUpDownLoad";
+            numericUpDownLoad.Size     = new System.Drawing.Size(212, 35);
+            numericUpDownLoad.TabIndex = 13;
+            numericUpDownLoad.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // labelSaveThreads
+            // 
+            labelSaveThreads.AutoSize = true;
+            labelSaveThreads.Location = new System.Drawing.Point(495, 105);
+            labelSaveThreads.Name     = "labelSaveThreads";
+            labelSaveThreads.Size     = new System.Drawing.Size(160, 30);
+            labelSaveThreads.TabIndex = 12;
+            labelSaveThreads.Text     = "Encode Threads";
+            // 
+            // labelUpscaleThreads
+            // 
+            labelUpscaleThreads.AutoSize = true;
+            labelUpscaleThreads.Location = new System.Drawing.Point(252, 105);
+            labelUpscaleThreads.Name     = "labelUpscaleThreads";
+            labelUpscaleThreads.Size     = new System.Drawing.Size(164, 30);
+            labelUpscaleThreads.TabIndex = 11;
+            labelUpscaleThreads.Text     = "Upscale Threads";
+            // 
+            // labelLoadThreads
+            // 
+            labelLoadThreads.AutoSize = true;
+            labelLoadThreads.Location = new System.Drawing.Point(9, 105);
+            labelLoadThreads.Name     = "labelLoadThreads";
+            labelLoadThreads.Size     = new System.Drawing.Size(163, 30);
+            labelLoadThreads.TabIndex = 10;
+            labelLoadThreads.Text     = "Decode Threads";
+            // 
+            // checkBoxTTA
+            // 
+            checkBoxTTA.Location                = new System.Drawing.Point(252, 182);
+            checkBoxTTA.Name                    = "checkBoxTTA";
+            checkBoxTTA.Size                    = new System.Drawing.Size(219, 29);
+            checkBoxTTA.TabIndex                = 9;
+            checkBoxTTA.Text                    = "TTA Mode";
+            checkBoxTTA.UseVisualStyleBackColor = true;
+            // 
             // checkBoxGrayscale
             // 
             checkBoxGrayscale.AutoSize                = true;
-            checkBoxGrayscale.Location                = new System.Drawing.Point(9, 108);
+            checkBoxGrayscale.Location                = new System.Drawing.Point(9, 179);
             checkBoxGrayscale.Name                    = "checkBoxGrayscale";
             checkBoxGrayscale.Size                    = new System.Drawing.Size(230, 34);
             checkBoxGrayscale.TabIndex                = 8;
@@ -235,7 +315,7 @@
             // buttonRun
             // 
             buttonRun.Anchor                  =  ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            buttonRun.Location                =  new System.Drawing.Point(12, 658);
+            buttonRun.Location                =  new System.Drawing.Point(12, 708);
             buttonRun.Name                    =  "buttonRun";
             buttonRun.Size                    =  new System.Drawing.Size(752, 80);
             buttonRun.TabIndex                =  9;
@@ -246,7 +326,7 @@
             // progressBar
             // 
             progressBar.Anchor                = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            progressBar.Location              = new System.Drawing.Point(12, 744);
+            progressBar.Location              = new System.Drawing.Point(12, 794);
             progressBar.MarqueeAnimationSpeed = 30;
             progressBar.Name                  = "progressBar";
             progressBar.Size                  = new System.Drawing.Size(752, 30);
@@ -261,33 +341,48 @@
             logListBox.HorizontalScrollbar = true;
             logListBox.IntegralHeight      = false;
             logListBox.ItemHeight          = 30;
-            logListBox.Location            = new System.Drawing.Point(21, 439);
+            logListBox.Location            = new System.Drawing.Point(21, 511);
             logListBox.Name                = "logListBox";
             logListBox.SelectionMode       = System.Windows.Forms.SelectionMode.None;
-            logListBox.Size                = new System.Drawing.Size(737, 213);
+            logListBox.Size                = new System.Drawing.Size(737, 191);
             logListBox.TabIndex            = 12;
             // 
             // WaifuForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode       = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize          = new System.Drawing.Size(776, 786);
+            ClientSize          = new System.Drawing.Size(776, 836);
             Controls.Add(logListBox);
             Controls.Add(progressBar);
             Controls.Add(buttonRun);
             Controls.Add(groupBoxSettings);
             Controls.Add(groupBoxInput);
             Icon        =  ((System.Drawing.Icon)resources.GetObject("$this.Icon"));
-            MaximumSize =  new System.Drawing.Size(1200, 1200);
-            MinimumSize =  new System.Drawing.Size(800, 850);
+            MinimumSize =  new System.Drawing.Size(800, 900);
             Text        =  "Waifu2x";
             FormClosed  += WaifuForm_FormClosed;
             groupBoxInput.ResumeLayout(false);
             groupBoxInput.PerformLayout();
             groupBoxSettings.ResumeLayout(false);
             groupBoxSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSave).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownUpscale).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownLoad).EndInit();
             ResumeLayout(false);
         }
+
+        private System.Windows.Forms.NumericUpDown numericUpDownLoad;
+        private System.Windows.Forms.NumericUpDown numericUpDownSave;
+
+        private System.Windows.Forms.NumericUpDown numericUpDownUpscale;
+
+        private System.Windows.Forms.Label labelSaveThreads;
+
+        private System.Windows.Forms.Label labelUpscaleThreads;
+
+        private System.Windows.Forms.Label labelLoadThreads;
+
+        private System.Windows.Forms.CheckBox checkBoxTTA;
 
         private System.Windows.Forms.ListBox logListBox;
         #endregion
@@ -311,6 +406,6 @@
         private Label labelScale;
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.ProgressBar progressBar;
-        private CheckBox checkBoxGrayscale;
+        private System.Windows.Forms.CheckBox checkBoxGrayscale;
     }
 }

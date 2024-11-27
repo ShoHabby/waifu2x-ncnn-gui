@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using ImageMagick;
 
 namespace Waifu2x.Forms;
@@ -93,12 +94,48 @@ public partial class WaifuForm : Form
     public string Format => this.comboBoxFormat.SelectedItem?.ToString()!.ToLower()!;
 
     /// <summary>
+    /// Amount of image decoding GPU threads
+    /// </summary>
+    public int DecodeThreads
+    {
+        get => (int)this.numericUpDownLoad.Value;
+        set => this.numericUpDownLoad.Value = value;
+    }
+
+    /// <summary>
+    /// Amount of image upscaling GPU threads
+    /// </summary>
+    public int UpscaleThreads
+    {
+        get => (int)this.numericUpDownUpscale.Value;
+        set => this.numericUpDownUpscale.Value = value;
+    }
+
+    /// <summary>
+    /// Amount of image encoding GPU threads
+    /// </summary>
+    public int EncodeThreads
+    {
+        get => (int)this.numericUpDownSave.Value;
+        set => this.numericUpDownSave.Value = value;
+    }
+
+    /// <summary>
     /// If files should be converted to grayscale after waifu2x runs
     /// </summary>
     public bool Grayscale
     {
         get => this.checkBoxGrayscale.Checked;
         set => this.checkBoxGrayscale.Checked = value;
+    }
+
+    /// <summary>
+    /// If TTA Mode should be enabled
+    /// </summary>
+    public bool TTAMode
+    {
+        get => this.checkBoxTTA.Checked;
+        set => this.checkBoxTTA.Checked = value;
     }
     #endregion
 
@@ -116,15 +153,19 @@ public partial class WaifuForm : Form
     /// </summary>
     private void Setup()
     {
-        this.IsFolder     = Settings.Default.IsFolder;
-        this.Input        = Settings.Default.Input;
-        this.OutputSuffix = Settings.Default.OutputSuffix;
-        this.ScaleIndex   = Settings.Default.ScaleIndex;
-        this.DenoiseIndex = Settings.Default.DenoiseIndex;
-        this.FormatIndex  = Settings.Default.FormatIndex;
-        this.Grayscale    = Settings.Default.Grayscale;
-        this.Width        = Settings.Default.Width;
-        this.Height       = Settings.Default.Height;
+        this.IsFolder       = Settings.Default.IsFolder;
+        this.Input          = Settings.Default.Input;
+        this.OutputSuffix   = Settings.Default.OutputSuffix;
+        this.ScaleIndex     = Settings.Default.ScaleIndex;
+        this.DenoiseIndex   = Settings.Default.DenoiseIndex;
+        this.FormatIndex    = Settings.Default.FormatIndex;
+        this.DecodeThreads  = Settings.Default.Decode;
+        this.UpscaleThreads = Settings.Default.Upscale;
+        this.EncodeThreads  = Settings.Default.Encode;
+        this.Grayscale      = Settings.Default.Grayscale;
+        this.TTAMode        = Settings.Default.TTA;
+        this.Width          = Settings.Default.Width;
+        this.Height         = Settings.Default.Height;
     }
 
     /// <summary>
@@ -134,27 +175,34 @@ public partial class WaifuForm : Form
     private void RunWaifu2x()
     {
         AddLogMessage("Running Waifu process...");
+
+        StringBuilder sb = new();
+        sb.Append("-v ");
+        sb.Append($"-i \"{this.Input}\" ");
+        sb.Append($"-o \"{this.Output}\" ");
+        sb.Append($"-s {this.ScaleFactor} ");
+        sb.Append($"-n {this.DenoiseLevel} ");
+        sb.Append($"-f {this.Format} ");
+        sb.Append($"-j {this.DecodeThreads}:{this.UpscaleThreads}:{this.EncodeThreads}");
+        if (this.TTAMode)
+        {
+            sb.Append(" -x");
+        }
+
         this.waifu = new Process
         {
             EnableRaisingEvents = true,
             StartInfo = new ProcessStartInfo
             {
                 FileName = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
-                Arguments = $"""-i "{this.Input}" -o "{this.Output}" -s {this.ScaleFactor} -n {this.DenoiseLevel} -f {this.Format} -v""",
+                Arguments = sb.ToString(),
                 UseShellExecute = false,
-                CreateNoWindow  = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError  = true,
             }
         };
 
         this.waifu.Exited += WaifuExited;
-        this.waifu.OutputDataReceived += WaifuOnOutputDataReceived;
-        this.waifu.ErrorDataReceived += WaifuOnOutputDataReceived;
         SetFormEnabled(false);
         this.waifu.Start();
-        this.waifu.BeginOutputReadLine();
-        this.waifu.BeginErrorReadLine();
     }
 
     /// <summary>
@@ -216,6 +264,23 @@ public partial class WaifuForm : Form
     }
 
     /// <summary>
+    /// Logs an message to the form log box
+    /// </summary>
+    /// <param name="message">Message to log</param>
+    private void AddLogMessage(string message)
+    {
+        if (this.InvokeRequired)
+        {
+            Invoke(() => AddLogMessage(message));
+        }
+        else
+        {
+            this.logListBox.Items.Add(message);
+            this.logListBox.TopIndex = this.logListBox.Items.Count - 1;
+        }
+    }
+
+    /// <summary>
     /// Validates the input/output paths
     /// </summary>
     /// <typeparam name="T">Type of IO (folder/file)</typeparam>
@@ -251,23 +316,6 @@ public partial class WaifuForm : Form
 
         return true;
     }
-
-    /// <summary>
-    /// Logs an message to the form log box
-    /// </summary>
-    /// <param name="message">Message to log</param>
-    private void AddLogMessage(string message)
-    {
-        if (this.InvokeRequired)
-        {
-            Invoke(() => AddLogMessage(message));
-        }
-        else
-        {
-            this.logListBox.Items.Add(message);
-            this.logListBox.TopIndex = this.logListBox.Items.Count - 1;
-        }
-    }
     #endregion
 
     #region Event handlers
@@ -280,7 +328,11 @@ public partial class WaifuForm : Form
         Settings.Default.ScaleIndex   = this.ScaleIndex;
         Settings.Default.DenoiseIndex = this.DenoiseIndex;
         Settings.Default.FormatIndex  = this.FormatIndex;
+        Settings.Default.Decode       = this.DecodeThreads;
+        Settings.Default.Upscale      = this.UpscaleThreads;
+        Settings.Default.Encode       = this.EncodeThreads;
         Settings.Default.Grayscale    = this.Grayscale;
+        Settings.Default.TTA          = this.TTAMode;
         Settings.Default.Width        = this.Width;
         Settings.Default.Height       = this.Height;
 
@@ -345,11 +397,6 @@ public partial class WaifuForm : Form
     {
         if (this.waifu is not null)
         {
-            this.waifu.WaitForExit();
-            this.waifu.CancelOutputRead();
-            this.waifu.CancelErrorRead();
-            this.waifu.OutputDataReceived -= WaifuOnOutputDataReceived;
-            this.waifu.ErrorDataReceived  -= WaifuOnOutputDataReceived;
             this.waifu.Close();
             this.waifu.Dispose();
             this.waifu = null;
@@ -363,14 +410,6 @@ public partial class WaifuForm : Form
         else
         {
             Invoke(() => SetFormEnabled(true));
-        }
-    }
-
-    private void WaifuOnOutputDataReceived(object sender, DataReceivedEventArgs e)
-    {
-        if (!string.IsNullOrEmpty(e.Data))
-        {
-            AddLogMessage(e.Data);
         }
     }
 
