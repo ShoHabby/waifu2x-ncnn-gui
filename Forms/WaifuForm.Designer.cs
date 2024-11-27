@@ -235,7 +235,7 @@
             // buttonRun
             // 
             buttonRun.Anchor                  =  ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            buttonRun.Location                =  new System.Drawing.Point(12, 707);
+            buttonRun.Location                =  new System.Drawing.Point(12, 658);
             buttonRun.Name                    =  "buttonRun";
             buttonRun.Size                    =  new System.Drawing.Size(752, 80);
             buttonRun.TabIndex                =  9;
@@ -246,7 +246,7 @@
             // progressBar
             // 
             progressBar.Anchor                = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            progressBar.Location              = new System.Drawing.Point(12, 793);
+            progressBar.Location              = new System.Drawing.Point(12, 744);
             progressBar.MarqueeAnimationSpeed = 30;
             progressBar.Name                  = "progressBar";
             progressBar.Size                  = new System.Drawing.Size(752, 30);
@@ -264,14 +264,14 @@
             logListBox.Location            = new System.Drawing.Point(21, 439);
             logListBox.Name                = "logListBox";
             logListBox.SelectionMode       = System.Windows.Forms.SelectionMode.None;
-            logListBox.Size                = new System.Drawing.Size(737, 262);
+            logListBox.Size                = new System.Drawing.Size(737, 213);
             logListBox.TabIndex            = 12;
             // 
             // WaifuForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode       = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize          = new System.Drawing.Size(776, 835);
+            ClientSize          = new System.Drawing.Size(776, 786);
             Controls.Add(logListBox);
             Controls.Add(progressBar);
             Controls.Add(buttonRun);
@@ -279,7 +279,7 @@
             Controls.Add(groupBoxInput);
             Icon        =  ((System.Drawing.Icon)resources.GetObject("$this.Icon"));
             MaximumSize =  new System.Drawing.Size(1200, 1200);
-            MinimumSize =  new System.Drawing.Size(800, 750);
+            MinimumSize =  new System.Drawing.Size(800, 850);
             Text        =  "Waifu2x";
             FormClosed  += WaifuForm_FormClosed;
             groupBoxInput.ResumeLayout(false);
