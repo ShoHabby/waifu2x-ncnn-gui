@@ -48,7 +48,7 @@ public partial class WaifuForm : Form
     /// Current output path
     /// </summary>
     public string Output => this.IsFolder ? this.Input + this.OutputSuffix
-                                          : $"{Path.ChangeExtension(this.Input, null)}{this.OutputSuffix}.{this.Format}";
+                                          : $"{Path.GetFileNameWithoutExtension(this.Input)}{this.OutputSuffix}.{this.Format}";
 
     /// <summary>
     /// Selected scale index
@@ -141,13 +141,20 @@ public partial class WaifuForm : Form
             {
                 FileName = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
                 Arguments = $"""-i "{this.Input}" -o "{this.Output}" -s {this.ScaleFactor} -n {this.DenoiseLevel} -f {this.Format} -v""",
-                UseShellExecute = false
+                UseShellExecute = false,
+                CreateNoWindow  = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError  = true,
             }
         };
 
         this.waifu.Exited += WaifuExited;
+        this.waifu.OutputDataReceived += WaifuOnOutputDataReceived;
+        this.waifu.ErrorDataReceived += WaifuOnOutputDataReceived;
         SetFormEnabled(false);
         this.waifu.Start();
+        this.waifu.BeginOutputReadLine();
+        this.waifu.BeginErrorReadLine();
     }
 
     /// <summary>
@@ -205,14 +212,7 @@ public partial class WaifuForm : Form
         using MagickImage image = new(file);
         image.Grayscale(PixelIntensityMethod.Average);
         image.Write(file);
-        if (this.InvokeRequired)
-        {
-            Invoke(() => AddLogMessage($"{file.FullName} converted to grayscale"));
-        }
-        else
-        {
-            AddLogMessage($"{file.FullName} converted to grayscale");
-        }
+        AddLogMessage($"{file.FullName} converted to grayscale");
     }
 
     /// <summary>
@@ -258,8 +258,15 @@ public partial class WaifuForm : Form
     /// <param name="message">Message to log</param>
     private void AddLogMessage(string message)
     {
-        this.logListBox.Items.Add(message);
-        this.logListBox.TopIndex = this.logListBox.Items.Count - 1;
+        if (this.InvokeRequired)
+        {
+            Invoke(() => AddLogMessage(message));
+        }
+        else
+        {
+            this.logListBox.Items.Add(message);
+            this.logListBox.TopIndex = this.logListBox.Items.Count - 1;
+        }
     }
     #endregion
 
@@ -336,10 +343,19 @@ public partial class WaifuForm : Form
 
     private void WaifuExited(object? sender, EventArgs e)
     {
-        this.waifu?.Dispose();
-        this.waifu = null;
-        Invoke(() => AddLogMessage("Waifu process completed"));
+        if (this.waifu is not null)
+        {
+            this.waifu.WaitForExit();
+            this.waifu.CancelOutputRead();
+            this.waifu.CancelErrorRead();
+            this.waifu.OutputDataReceived -= WaifuOnOutputDataReceived;
+            this.waifu.ErrorDataReceived  -= WaifuOnOutputDataReceived;
+            this.waifu.Close();
+            this.waifu.Dispose();
+            this.waifu = null;
+        }
 
+        AddLogMessage("Waifu process completed");
         if (this.Grayscale)
         {
             Invoke(RunGrayscale);
@@ -350,17 +366,37 @@ public partial class WaifuForm : Form
         }
     }
 
-    private void GrayscaleCompleted(Task task)
+    private void WaifuOnOutputDataReceived(object sender, DataReceivedEventArgs e)
     {
-        // Restore status from UI thread
-        this.grayscale?.Dispose();
-        this.grayscale = null;
-        Invoke(() =>
+        if (!string.IsNullOrEmpty(e.Data))
         {
-            SetFormEnabled(true);
-            this.progressBar.Value = 0;
-            AddLogMessage("All images converted to grayscale");
-        });
+            AddLogMessage(e.Data);
+        }
+    }
+
+    private async void GrayscaleCompleted(Task task)
+    {
+        try
+        {
+            // Restore status from UI thread
+            if (this.grayscale is not null)
+            {
+                await this.grayscale;
+            }
+
+            this.grayscale?.Dispose();
+            this.grayscale = null;
+            Invoke(() =>
+            {
+                SetFormEnabled(true);
+                this.progressBar.Value = 0;
+                AddLogMessage("All images converted to grayscale");
+            });
+        }
+        catch (Exception e)
+        {
+            AddLogMessage(e.Message);
+        }
     }
     #endregion
 }
