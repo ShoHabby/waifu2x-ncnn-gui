@@ -28,261 +28,264 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.folderBrowserInput  = new System.Windows.Forms.FolderBrowserDialog();
-            this.labelInput          = new System.Windows.Forms.Label();
-            this.textBoxInput        = new System.Windows.Forms.TextBox();
-            this.buttonBrowseInput   = new System.Windows.Forms.Button();
-            this.labelOutputSuffix   = new System.Windows.Forms.Label();
-            this.textBoxOutputSuffix = new System.Windows.Forms.TextBox();
-            this.groupBoxInput       = new System.Windows.Forms.GroupBox();
-            this.radioButtonFile     = new System.Windows.Forms.RadioButton();
-            this.radioButtonFolder   = new System.Windows.Forms.RadioButton();
-            this.labelInputType      = new System.Windows.Forms.Label();
-            this.openFileInput       = new System.Windows.Forms.OpenFileDialog();
-            this.groupBoxSettings    = new System.Windows.Forms.GroupBox();
-            this.checkBoxGrayscale   = new System.Windows.Forms.CheckBox();
-            this.labelFormat         = new System.Windows.Forms.Label();
-            this.comboBoxFormat      = new System.Windows.Forms.ComboBox();
-            this.labelDenoising      = new System.Windows.Forms.Label();
-            this.comboBoxDenoising   = new System.Windows.Forms.ComboBox();
-            this.labelScale          = new System.Windows.Forms.Label();
-            this.comboBoxScale       = new System.Windows.Forms.ComboBox();
-            this.buttonRun           = new System.Windows.Forms.Button();
-            this.progressBar         = new System.Windows.Forms.ProgressBar();
-            this.logListBox          = new System.Windows.Forms.ListBox();
-            this.groupBoxInput.SuspendLayout();
-            this.groupBoxSettings.SuspendLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WaifuForm));
+            folderBrowserInput  = new System.Windows.Forms.FolderBrowserDialog();
+            labelInput          = new System.Windows.Forms.Label();
+            textBoxInput        = new System.Windows.Forms.TextBox();
+            buttonBrowseInput   = new System.Windows.Forms.Button();
+            labelOutputSuffix   = new System.Windows.Forms.Label();
+            textBoxOutputSuffix = new System.Windows.Forms.TextBox();
+            groupBoxInput       = new System.Windows.Forms.GroupBox();
+            radioButtonFile     = new System.Windows.Forms.RadioButton();
+            radioButtonFolder   = new System.Windows.Forms.RadioButton();
+            labelInputType      = new System.Windows.Forms.Label();
+            openFileInput       = new System.Windows.Forms.OpenFileDialog();
+            groupBoxSettings    = new System.Windows.Forms.GroupBox();
+            checkBoxGrayscale   = new System.Windows.Forms.CheckBox();
+            labelFormat         = new System.Windows.Forms.Label();
+            comboBoxFormat      = new System.Windows.Forms.ComboBox();
+            labelDenoising      = new System.Windows.Forms.Label();
+            comboBoxDenoising   = new System.Windows.Forms.ComboBox();
+            labelScale          = new System.Windows.Forms.Label();
+            comboBoxScale       = new System.Windows.Forms.ComboBox();
+            buttonRun           = new System.Windows.Forms.Button();
+            progressBar         = new System.Windows.Forms.ProgressBar();
+            logListBox          = new System.Windows.Forms.ListBox();
+            groupBoxInput.SuspendLayout();
+            groupBoxSettings.SuspendLayout();
             SuspendLayout();
             // 
             // labelInput
             // 
-            this.labelInput.AutoSize = true;
-            this.labelInput.Location = new System.Drawing.Point(6, 101);
-            this.labelInput.Name     = "labelInput";
-            this.labelInput.Size     = new System.Drawing.Size(62, 30);
-            this.labelInput.TabIndex = 0;
-            this.labelInput.Text     = "Input";
+            labelInput.AutoSize = true;
+            labelInput.Location = new System.Drawing.Point(6, 101);
+            labelInput.Name     = "labelInput";
+            labelInput.Size     = new System.Drawing.Size(62, 30);
+            labelInput.TabIndex = 0;
+            labelInput.Text     = "Input";
             // 
             // textBoxInput
             // 
-            this.textBoxInput.Anchor   = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.textBoxInput.Location = new System.Drawing.Point(143, 137);
-            this.textBoxInput.Name     = "textBoxInput";
-            this.textBoxInput.Size     = new System.Drawing.Size(603, 35);
-            this.textBoxInput.TabIndex = 3;
+            textBoxInput.Anchor   = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            textBoxInput.Location = new System.Drawing.Point(143, 137);
+            textBoxInput.Name     = "textBoxInput";
+            textBoxInput.Size     = new System.Drawing.Size(603, 35);
+            textBoxInput.TabIndex = 3;
             // 
             // buttonBrowseInput
             // 
-            this.buttonBrowseInput.Location                =  new System.Drawing.Point(6, 134);
-            this.buttonBrowseInput.Name                    =  "buttonBrowseInput";
-            this.buttonBrowseInput.Size                    =  new System.Drawing.Size(131, 42);
-            this.buttonBrowseInput.TabIndex                =  2;
-            this.buttonBrowseInput.Text                    =  "Browse";
-            this.buttonBrowseInput.UseVisualStyleBackColor =  true;
-            this.buttonBrowseInput.Click                   += buttonBrowseInput_Click;
+            buttonBrowseInput.Location                =  new System.Drawing.Point(6, 134);
+            buttonBrowseInput.Name                    =  "buttonBrowseInput";
+            buttonBrowseInput.Size                    =  new System.Drawing.Size(131, 42);
+            buttonBrowseInput.TabIndex                =  2;
+            buttonBrowseInput.Text                    =  "Browse";
+            buttonBrowseInput.UseVisualStyleBackColor =  true;
+            buttonBrowseInput.Click                   += buttonBrowseInput_Click;
             // 
             // labelOutputSuffix
             // 
-            this.labelOutputSuffix.AutoSize = true;
-            this.labelOutputSuffix.Location = new System.Drawing.Point(6, 179);
-            this.labelOutputSuffix.Name     = "labelOutputSuffix";
-            this.labelOutputSuffix.Size     = new System.Drawing.Size(137, 30);
-            this.labelOutputSuffix.TabIndex = 3;
-            this.labelOutputSuffix.Text     = "Output Suffix";
+            labelOutputSuffix.AutoSize = true;
+            labelOutputSuffix.Location = new System.Drawing.Point(6, 179);
+            labelOutputSuffix.Name     = "labelOutputSuffix";
+            labelOutputSuffix.Size     = new System.Drawing.Size(137, 30);
+            labelOutputSuffix.TabIndex = 3;
+            labelOutputSuffix.Text     = "Output Suffix";
             // 
             // textBoxOutputSuffix
             // 
-            this.textBoxOutputSuffix.Anchor   = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.textBoxOutputSuffix.Location = new System.Drawing.Point(9, 215);
-            this.textBoxOutputSuffix.Name     = "textBoxOutputSuffix";
-            this.textBoxOutputSuffix.Size     = new System.Drawing.Size(737, 35);
-            this.textBoxOutputSuffix.TabIndex = 4;
+            textBoxOutputSuffix.Anchor   = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            textBoxOutputSuffix.Location = new System.Drawing.Point(9, 215);
+            textBoxOutputSuffix.Name     = "textBoxOutputSuffix";
+            textBoxOutputSuffix.Size     = new System.Drawing.Size(737, 35);
+            textBoxOutputSuffix.TabIndex = 4;
             // 
             // groupBoxInput
             // 
-            this.groupBoxInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.groupBoxInput.Controls.Add(this.radioButtonFile);
-            this.groupBoxInput.Controls.Add(this.radioButtonFolder);
-            this.groupBoxInput.Controls.Add(this.labelInputType);
-            this.groupBoxInput.Controls.Add(this.buttonBrowseInput);
-            this.groupBoxInput.Controls.Add(this.textBoxOutputSuffix);
-            this.groupBoxInput.Controls.Add(this.labelInput);
-            this.groupBoxInput.Controls.Add(this.textBoxInput);
-            this.groupBoxInput.Controls.Add(this.labelOutputSuffix);
-            this.groupBoxInput.Location = new System.Drawing.Point(12, 12);
-            this.groupBoxInput.Name     = "groupBoxInput";
-            this.groupBoxInput.Size     = new System.Drawing.Size(752, 266);
-            this.groupBoxInput.TabIndex = 6;
-            this.groupBoxInput.TabStop  = false;
-            this.groupBoxInput.Text     = "Files";
+            groupBoxInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            groupBoxInput.Controls.Add(radioButtonFile);
+            groupBoxInput.Controls.Add(radioButtonFolder);
+            groupBoxInput.Controls.Add(labelInputType);
+            groupBoxInput.Controls.Add(buttonBrowseInput);
+            groupBoxInput.Controls.Add(textBoxOutputSuffix);
+            groupBoxInput.Controls.Add(labelInput);
+            groupBoxInput.Controls.Add(textBoxInput);
+            groupBoxInput.Controls.Add(labelOutputSuffix);
+            groupBoxInput.Location = new System.Drawing.Point(12, 12);
+            groupBoxInput.Name     = "groupBoxInput";
+            groupBoxInput.Size     = new System.Drawing.Size(752, 266);
+            groupBoxInput.TabIndex = 6;
+            groupBoxInput.TabStop  = false;
+            groupBoxInput.Text     = "Files";
             // 
             // radioButtonFile
             // 
-            this.radioButtonFile.AutoSize                = true;
-            this.radioButtonFile.Location                = new System.Drawing.Point(110, 64);
-            this.radioButtonFile.Name                    = "radioButtonFile";
-            this.radioButtonFile.Size                    = new System.Drawing.Size(69, 34);
-            this.radioButtonFile.TabIndex                = 1;
-            this.radioButtonFile.Text                    = "File";
-            this.radioButtonFile.UseVisualStyleBackColor = true;
+            radioButtonFile.AutoSize                = true;
+            radioButtonFile.Location                = new System.Drawing.Point(110, 64);
+            radioButtonFile.Name                    = "radioButtonFile";
+            radioButtonFile.Size                    = new System.Drawing.Size(69, 34);
+            radioButtonFile.TabIndex                = 1;
+            radioButtonFile.Text                    = "File";
+            radioButtonFile.UseVisualStyleBackColor = true;
             // 
             // radioButtonFolder
             // 
-            this.radioButtonFolder.AutoSize                = true;
-            this.radioButtonFolder.Checked                 = true;
-            this.radioButtonFolder.Location                = new System.Drawing.Point(9, 64);
-            this.radioButtonFolder.Name                    = "radioButtonFolder";
-            this.radioButtonFolder.Size                    = new System.Drawing.Size(95, 34);
-            this.radioButtonFolder.TabIndex                = 0;
-            this.radioButtonFolder.TabStop                 = true;
-            this.radioButtonFolder.Text                    = "Folder";
-            this.radioButtonFolder.UseVisualStyleBackColor = true;
+            radioButtonFolder.AutoSize                = true;
+            radioButtonFolder.Checked                 = true;
+            radioButtonFolder.Location                = new System.Drawing.Point(9, 64);
+            radioButtonFolder.Name                    = "radioButtonFolder";
+            radioButtonFolder.Size                    = new System.Drawing.Size(95, 34);
+            radioButtonFolder.TabIndex                = 0;
+            radioButtonFolder.TabStop                 = true;
+            radioButtonFolder.Text                    = "Folder";
+            radioButtonFolder.UseVisualStyleBackColor = true;
             // 
             // labelInputType
             // 
-            this.labelInputType.AutoSize = true;
-            this.labelInputType.Location = new System.Drawing.Point(9, 31);
-            this.labelInputType.Name     = "labelInputType";
-            this.labelInputType.Size     = new System.Drawing.Size(111, 30);
-            this.labelInputType.TabIndex = 6;
-            this.labelInputType.Text     = "Input Type";
+            labelInputType.AutoSize = true;
+            labelInputType.Location = new System.Drawing.Point(9, 31);
+            labelInputType.Name     = "labelInputType";
+            labelInputType.Size     = new System.Drawing.Size(111, 30);
+            labelInputType.TabIndex = 6;
+            labelInputType.Text     = "Input Type";
             // 
             // groupBoxSettings
             // 
-            this.groupBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.groupBoxSettings.Controls.Add(this.checkBoxGrayscale);
-            this.groupBoxSettings.Controls.Add(this.labelFormat);
-            this.groupBoxSettings.Controls.Add(this.comboBoxFormat);
-            this.groupBoxSettings.Controls.Add(this.labelDenoising);
-            this.groupBoxSettings.Controls.Add(this.comboBoxDenoising);
-            this.groupBoxSettings.Controls.Add(this.labelScale);
-            this.groupBoxSettings.Controls.Add(this.comboBoxScale);
-            this.groupBoxSettings.Location = new System.Drawing.Point(12, 284);
-            this.groupBoxSettings.Name     = "groupBoxSettings";
-            this.groupBoxSettings.Size     = new System.Drawing.Size(752, 149);
-            this.groupBoxSettings.TabIndex = 7;
-            this.groupBoxSettings.TabStop  = false;
-            this.groupBoxSettings.Text     = "Settings";
+            groupBoxSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            groupBoxSettings.Controls.Add(checkBoxGrayscale);
+            groupBoxSettings.Controls.Add(labelFormat);
+            groupBoxSettings.Controls.Add(comboBoxFormat);
+            groupBoxSettings.Controls.Add(labelDenoising);
+            groupBoxSettings.Controls.Add(comboBoxDenoising);
+            groupBoxSettings.Controls.Add(labelScale);
+            groupBoxSettings.Controls.Add(comboBoxScale);
+            groupBoxSettings.Location = new System.Drawing.Point(12, 284);
+            groupBoxSettings.Name     = "groupBoxSettings";
+            groupBoxSettings.Size     = new System.Drawing.Size(752, 149);
+            groupBoxSettings.TabIndex = 7;
+            groupBoxSettings.TabStop  = false;
+            groupBoxSettings.Text     = "Settings";
             // 
             // checkBoxGrayscale
             // 
-            this.checkBoxGrayscale.AutoSize                = true;
-            this.checkBoxGrayscale.Location                = new System.Drawing.Point(9, 108);
-            this.checkBoxGrayscale.Name                    = "checkBoxGrayscale";
-            this.checkBoxGrayscale.Size                    = new System.Drawing.Size(230, 34);
-            this.checkBoxGrayscale.TabIndex                = 8;
-            this.checkBoxGrayscale.Text                    = "Convert to Grayscale";
-            this.checkBoxGrayscale.UseVisualStyleBackColor = true;
+            checkBoxGrayscale.AutoSize                = true;
+            checkBoxGrayscale.Location                = new System.Drawing.Point(9, 108);
+            checkBoxGrayscale.Name                    = "checkBoxGrayscale";
+            checkBoxGrayscale.Size                    = new System.Drawing.Size(230, 34);
+            checkBoxGrayscale.TabIndex                = 8;
+            checkBoxGrayscale.Text                    = "Convert to Grayscale";
+            checkBoxGrayscale.UseVisualStyleBackColor = true;
             // 
             // labelFormat
             // 
-            this.labelFormat.AutoSize = true;
-            this.labelFormat.Location = new System.Drawing.Point(495, 31);
-            this.labelFormat.Name     = "labelFormat";
-            this.labelFormat.Size     = new System.Drawing.Size(78, 30);
-            this.labelFormat.TabIndex = 5;
-            this.labelFormat.Text     = "Format";
+            labelFormat.AutoSize = true;
+            labelFormat.Location = new System.Drawing.Point(495, 31);
+            labelFormat.Name     = "labelFormat";
+            labelFormat.Size     = new System.Drawing.Size(78, 30);
+            labelFormat.TabIndex = 5;
+            labelFormat.Text     = "Format";
             // 
             // comboBoxFormat
             // 
-            this.comboBoxFormat.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxFormat.FormattingEnabled = true;
-            this.comboBoxFormat.Items.AddRange(new object[] { "PNG", "JPG", "WEBP" });
-            this.comboBoxFormat.Location = new System.Drawing.Point(495, 64);
-            this.comboBoxFormat.Name     = "comboBoxFormat";
-            this.comboBoxFormat.Size     = new System.Drawing.Size(212, 38);
-            this.comboBoxFormat.TabIndex = 7;
+            comboBoxFormat.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxFormat.FormattingEnabled = true;
+            comboBoxFormat.Items.AddRange(new object[] { "PNG", "JPG", "WEBP" });
+            comboBoxFormat.Location = new System.Drawing.Point(495, 64);
+            comboBoxFormat.Name     = "comboBoxFormat";
+            comboBoxFormat.Size     = new System.Drawing.Size(212, 38);
+            comboBoxFormat.TabIndex = 7;
             // 
             // labelDenoising
             // 
-            this.labelDenoising.AutoSize = true;
-            this.labelDenoising.Location = new System.Drawing.Point(252, 31);
-            this.labelDenoising.Name     = "labelDenoising";
-            this.labelDenoising.Size     = new System.Drawing.Size(106, 30);
-            this.labelDenoising.TabIndex = 3;
-            this.labelDenoising.Text     = "Denoising";
+            labelDenoising.AutoSize = true;
+            labelDenoising.Location = new System.Drawing.Point(252, 31);
+            labelDenoising.Name     = "labelDenoising";
+            labelDenoising.Size     = new System.Drawing.Size(106, 30);
+            labelDenoising.TabIndex = 3;
+            labelDenoising.Text     = "Denoising";
             // 
             // comboBoxDenoising
             // 
-            this.comboBoxDenoising.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDenoising.FormattingEnabled = true;
-            this.comboBoxDenoising.Items.AddRange(new object[] { "0", "1", "2", "3" });
-            this.comboBoxDenoising.Location = new System.Drawing.Point(252, 64);
-            this.comboBoxDenoising.Name     = "comboBoxDenoising";
-            this.comboBoxDenoising.Size     = new System.Drawing.Size(212, 38);
-            this.comboBoxDenoising.TabIndex = 6;
+            comboBoxDenoising.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxDenoising.FormattingEnabled = true;
+            comboBoxDenoising.Items.AddRange(new object[] { "0", "1", "2", "3" });
+            comboBoxDenoising.Location = new System.Drawing.Point(252, 64);
+            comboBoxDenoising.Name     = "comboBoxDenoising";
+            comboBoxDenoising.Size     = new System.Drawing.Size(212, 38);
+            comboBoxDenoising.TabIndex = 6;
             // 
             // labelScale
             // 
-            this.labelScale.AutoSize = true;
-            this.labelScale.Location = new System.Drawing.Point(6, 31);
-            this.labelScale.Name     = "labelScale";
-            this.labelScale.Size     = new System.Drawing.Size(61, 30);
-            this.labelScale.TabIndex = 1;
-            this.labelScale.Text     = "Scale";
+            labelScale.AutoSize = true;
+            labelScale.Location = new System.Drawing.Point(6, 31);
+            labelScale.Name     = "labelScale";
+            labelScale.Size     = new System.Drawing.Size(61, 30);
+            labelScale.TabIndex = 1;
+            labelScale.Text     = "Scale";
             // 
             // comboBoxScale
             // 
-            this.comboBoxScale.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxScale.FormattingEnabled = true;
-            this.comboBoxScale.Items.AddRange(new object[] { "1", "2", "4", "8", "16", "32" });
-            this.comboBoxScale.Location = new System.Drawing.Point(9, 64);
-            this.comboBoxScale.Name     = "comboBoxScale";
-            this.comboBoxScale.Size     = new System.Drawing.Size(212, 38);
-            this.comboBoxScale.TabIndex = 5;
+            comboBoxScale.DropDownStyle     = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxScale.FormattingEnabled = true;
+            comboBoxScale.Items.AddRange(new object[] { "1", "2", "4", "8", "16", "32" });
+            comboBoxScale.Location = new System.Drawing.Point(9, 64);
+            comboBoxScale.Name     = "comboBoxScale";
+            comboBoxScale.Size     = new System.Drawing.Size(212, 38);
+            comboBoxScale.TabIndex = 5;
             // 
             // buttonRun
             // 
-            this.buttonRun.Anchor                  =  ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.buttonRun.Location                =  new System.Drawing.Point(12, 707);
-            this.buttonRun.Name                    =  "buttonRun";
-            this.buttonRun.Size                    =  new System.Drawing.Size(752, 80);
-            this.buttonRun.TabIndex                =  9;
-            this.buttonRun.Text                    =  "Run";
-            this.buttonRun.UseVisualStyleBackColor =  true;
-            this.buttonRun.Click                   += buttonRun_Click;
+            buttonRun.Anchor                  =  ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            buttonRun.Location                =  new System.Drawing.Point(12, 707);
+            buttonRun.Name                    =  "buttonRun";
+            buttonRun.Size                    =  new System.Drawing.Size(752, 80);
+            buttonRun.TabIndex                =  9;
+            buttonRun.Text                    =  "Run";
+            buttonRun.UseVisualStyleBackColor =  true;
+            buttonRun.Click                   += buttonRun_Click;
             // 
             // progressBar
             // 
-            this.progressBar.Anchor                = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.progressBar.Location              = new System.Drawing.Point(12, 793);
-            this.progressBar.MarqueeAnimationSpeed = 30;
-            this.progressBar.Name                  = "progressBar";
-            this.progressBar.Size                  = new System.Drawing.Size(752, 30);
-            this.progressBar.Step                  = 1;
-            this.progressBar.Style                 = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex              = 11;
+            progressBar.Anchor                = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            progressBar.Location              = new System.Drawing.Point(12, 793);
+            progressBar.MarqueeAnimationSpeed = 30;
+            progressBar.Name                  = "progressBar";
+            progressBar.Size                  = new System.Drawing.Size(752, 30);
+            progressBar.Step                  = 1;
+            progressBar.Style                 = System.Windows.Forms.ProgressBarStyle.Continuous;
+            progressBar.TabIndex              = 11;
             // 
             // logListBox
             // 
-            this.logListBox.Anchor            = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
-            this.logListBox.FormattingEnabled = true;
-            this.logListBox.IntegralHeight    = false;
-            this.logListBox.ItemHeight        = 30;
-            this.logListBox.Location          = new System.Drawing.Point(21, 439);
-            this.logListBox.Name              = "logListBox";
-            this.logListBox.SelectionMode     = System.Windows.Forms.SelectionMode.None;
-            this.logListBox.Size              = new System.Drawing.Size(737, 262);
-            this.logListBox.TabIndex          = 12;
+            logListBox.Anchor              = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
+            logListBox.FormattingEnabled   = true;
+            logListBox.HorizontalScrollbar = true;
+            logListBox.IntegralHeight      = false;
+            logListBox.ItemHeight          = 30;
+            logListBox.Location            = new System.Drawing.Point(21, 439);
+            logListBox.Name                = "logListBox";
+            logListBox.SelectionMode       = System.Windows.Forms.SelectionMode.None;
+            logListBox.Size                = new System.Drawing.Size(737, 262);
+            logListBox.TabIndex            = 12;
             // 
             // WaifuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
-            this.AutoScaleMode       = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize          = new System.Drawing.Size(776, 835);
-            this.Controls.Add(this.logListBox);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.buttonRun);
-            this.Controls.Add(this.groupBoxSettings);
-            this.Controls.Add(this.groupBoxInput);
-            this.MaximumSize =  new System.Drawing.Size(1200, 1200);
-            this.MinimumSize =  new System.Drawing.Size(800, 750);
-            this.Text        =  "Waifu2x";
-            FormClosed       += WaifuForm_FormClosed;
-            this.groupBoxInput.ResumeLayout(false);
-            this.groupBoxInput.PerformLayout();
-            this.groupBoxSettings.ResumeLayout(false);
-            this.groupBoxSettings.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleMode       = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize          = new System.Drawing.Size(776, 835);
+            Controls.Add(logListBox);
+            Controls.Add(progressBar);
+            Controls.Add(buttonRun);
+            Controls.Add(groupBoxSettings);
+            Controls.Add(groupBoxInput);
+            Icon        =  ((System.Drawing.Icon)resources.GetObject("$this.Icon"));
+            MaximumSize =  new System.Drawing.Size(1200, 1200);
+            MinimumSize =  new System.Drawing.Size(800, 750);
+            Text        =  "Waifu2x";
+            FormClosed  += WaifuForm_FormClosed;
+            groupBoxInput.ResumeLayout(false);
+            groupBoxInput.PerformLayout();
+            groupBoxSettings.ResumeLayout(false);
+            groupBoxSettings.PerformLayout();
             ResumeLayout(false);
         }
 
