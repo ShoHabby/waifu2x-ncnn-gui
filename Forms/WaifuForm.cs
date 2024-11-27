@@ -9,6 +9,7 @@ public partial class WaifuForm : Form
     #region Fields
     private Process? waifu;
     private Task? grayscale;
+    private readonly StringBuilder argsBuilder = new();
     #endregion
 
     #region Properties
@@ -176,17 +177,16 @@ public partial class WaifuForm : Form
     {
         AddLogMessage("Running Waifu process...");
 
-        StringBuilder sb = new();
-        sb.Append("-v ");
-        sb.Append($"-i \"{this.Input}\" ");
-        sb.Append($"-o \"{this.Output}\" ");
-        sb.Append($"-s {this.ScaleFactor} ");
-        sb.Append($"-n {this.DenoiseLevel} ");
-        sb.Append($"-f {this.Format} ");
-        sb.Append($"-j {this.DecodeThreads}:{this.UpscaleThreads}:{this.EncodeThreads}");
+        this.argsBuilder.Append("-v ");
+        this.argsBuilder.Append($"-i \"{this.Input}\" ");
+        this.argsBuilder.Append($"-o \"{this.Output}\" ");
+        this.argsBuilder.Append($"-s {this.ScaleFactor} ");
+        this.argsBuilder.Append($"-n {this.DenoiseLevel} ");
+        this.argsBuilder.Append($"-f {this.Format} ");
+        this.argsBuilder.Append($"-j {this.DecodeThreads}:{this.UpscaleThreads}:{this.EncodeThreads}");
         if (this.TTAMode)
         {
-            sb.Append(" -x");
+            this.argsBuilder.Append(" -x");
         }
 
         this.waifu = new Process
@@ -194,8 +194,8 @@ public partial class WaifuForm : Form
             EnableRaisingEvents = true,
             StartInfo = new ProcessStartInfo
             {
-                FileName = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
-                Arguments = sb.ToString(),
+                FileName        = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
+                Arguments       = this.argsBuilder.ToString(),
                 UseShellExecute = false,
             }
         };
@@ -203,6 +203,7 @@ public partial class WaifuForm : Form
         this.waifu.Exited += WaifuExited;
         SetFormEnabled(false);
         this.waifu.Start();
+        this.argsBuilder.Clear();
     }
 
     /// <summary>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WaifuForm));
             folderBrowserInput   = new System.Windows.Forms.FolderBrowserDialog();
             labelInput           = new System.Windows.Forms.Label();
@@ -58,6 +59,7 @@
             buttonRun            = new System.Windows.Forms.Button();
             progressBar          = new System.Windows.Forms.ProgressBar();
             logListBox           = new System.Windows.Forms.ListBox();
+            toolTip              = new System.Windows.Forms.ToolTip(components);
             groupBoxInput.SuspendLayout();
             groupBoxSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSave).BeginInit();
@@ -108,6 +110,7 @@
             textBoxOutputSuffix.Name     = "textBoxOutputSuffix";
             textBoxOutputSuffix.Size     = new System.Drawing.Size(737, 35);
             textBoxOutputSuffix.TabIndex = 4;
+            toolTip.SetToolTip(textBoxOutputSuffix, "File/Folder output suffix");
             // 
             // groupBoxInput
             // 
@@ -189,7 +192,8 @@
             numericUpDownSave.Name     = "numericUpDownSave";
             numericUpDownSave.Size     = new System.Drawing.Size(212, 35);
             numericUpDownSave.TabIndex = 15;
-            numericUpDownSave.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            toolTip.SetToolTip(numericUpDownSave, "Output GPU encode threads");
+            numericUpDownSave.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // numericUpDownUpscale
             // 
@@ -198,7 +202,8 @@
             numericUpDownUpscale.Name     = "numericUpDownUpscale";
             numericUpDownUpscale.Size     = new System.Drawing.Size(212, 35);
             numericUpDownUpscale.TabIndex = 14;
-            numericUpDownUpscale.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            toolTip.SetToolTip(numericUpDownUpscale, "Waifu2x GPU threads");
+            numericUpDownUpscale.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // numericUpDownLoad
             // 
@@ -207,7 +212,8 @@
             numericUpDownLoad.Name     = "numericUpDownLoad";
             numericUpDownLoad.Size     = new System.Drawing.Size(212, 35);
             numericUpDownLoad.TabIndex = 13;
-            numericUpDownLoad.Value    = new decimal(new int[] { 2, 0, 0, 0 });
+            toolTip.SetToolTip(numericUpDownLoad, "Input GPU decode threads");
+            numericUpDownLoad.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // labelSaveThreads
             // 
@@ -238,21 +244,23 @@
             // 
             // checkBoxTTA
             // 
-            checkBoxTTA.Location                = new System.Drawing.Point(252, 182);
-            checkBoxTTA.Name                    = "checkBoxTTA";
-            checkBoxTTA.Size                    = new System.Drawing.Size(219, 29);
-            checkBoxTTA.TabIndex                = 9;
-            checkBoxTTA.Text                    = "TTA Mode";
+            checkBoxTTA.Location = new System.Drawing.Point(252, 182);
+            checkBoxTTA.Name     = "checkBoxTTA";
+            checkBoxTTA.Size     = new System.Drawing.Size(219, 29);
+            checkBoxTTA.TabIndex = 9;
+            checkBoxTTA.Text     = "TTA Mode";
+            toolTip.SetToolTip(checkBoxTTA, "Might provide better results at the cost of extra processing time");
             checkBoxTTA.UseVisualStyleBackColor = true;
             // 
             // checkBoxGrayscale
             // 
-            checkBoxGrayscale.AutoSize                = true;
-            checkBoxGrayscale.Location                = new System.Drawing.Point(9, 179);
-            checkBoxGrayscale.Name                    = "checkBoxGrayscale";
-            checkBoxGrayscale.Size                    = new System.Drawing.Size(230, 34);
-            checkBoxGrayscale.TabIndex                = 8;
-            checkBoxGrayscale.Text                    = "Convert to Grayscale";
+            checkBoxGrayscale.AutoSize = true;
+            checkBoxGrayscale.Location = new System.Drawing.Point(9, 179);
+            checkBoxGrayscale.Name     = "checkBoxGrayscale";
+            checkBoxGrayscale.Size     = new System.Drawing.Size(230, 34);
+            checkBoxGrayscale.TabIndex = 8;
+            checkBoxGrayscale.Text     = "Convert to Grayscale";
+            toolTip.SetToolTip(checkBoxGrayscale, "Converts the output files to 8bpp grayscale images");
             checkBoxGrayscale.UseVisualStyleBackColor = true;
             // 
             // labelFormat
@@ -273,6 +281,7 @@
             comboBoxFormat.Name     = "comboBoxFormat";
             comboBoxFormat.Size     = new System.Drawing.Size(212, 38);
             comboBoxFormat.TabIndex = 7;
+            toolTip.SetToolTip(comboBoxFormat, "Output file format");
             // 
             // labelDenoising
             // 
@@ -292,6 +301,7 @@
             comboBoxDenoising.Name     = "comboBoxDenoising";
             comboBoxDenoising.Size     = new System.Drawing.Size(212, 38);
             comboBoxDenoising.TabIndex = 6;
+            toolTip.SetToolTip(comboBoxDenoising, "Denoising level, higher is better");
             // 
             // labelScale
             // 
@@ -311,6 +321,7 @@
             comboBoxScale.Name     = "comboBoxScale";
             comboBoxScale.Size     = new System.Drawing.Size(212, 38);
             comboBoxScale.TabIndex = 5;
+            toolTip.SetToolTip(comboBoxScale, "Image upscale factor");
             // 
             // buttonRun
             // 
@@ -347,6 +358,10 @@
             logListBox.Size                = new System.Drawing.Size(737, 191);
             logListBox.TabIndex            = 12;
             // 
+            // toolTip
+            // 
+            toolTip.AutomaticDelay = 1000;
+            // 
             // WaifuForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
@@ -370,6 +385,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownLoad).EndInit();
             ResumeLayout(false);
         }
+
+        private System.Windows.Forms.ToolTip toolTip;
 
         private System.Windows.Forms.NumericUpDown numericUpDownLoad;
         private System.Windows.Forms.NumericUpDown numericUpDownSave;
@@ -398,11 +415,11 @@
         private Label labelInputType;
         private OpenFileDialog openFileInput;
         private System.Windows.Forms.GroupBox groupBoxSettings;
-        private ComboBox comboBoxScale;
+        private System.Windows.Forms.ComboBox comboBoxScale;
         private Label labelFormat;
-        private ComboBox comboBoxFormat;
+        private System.Windows.Forms.ComboBox comboBoxFormat;
         private Label labelDenoising;
-        private ComboBox comboBoxDenoising;
+        private System.Windows.Forms.ComboBox comboBoxDenoising;
         private Label labelScale;
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.ProgressBar progressBar;
