@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Waifu2xAvalonia.ViewModels;
+using Waifu2x.ViewModels;
 
-namespace Waifu2xAvalonia;
+namespace Waifu2x;
 
 public class ViewLocator : IDataTemplate
 {

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waifu2xAvalonia", "Waifu2xAvalonia.csproj", "{F91D0E3D-3179-4ECE-A8A5-5F69E56B8132}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waifu2x", "Waifu2x.csproj", "{F91D0E3D-3179-4ECE-A8A5-5F69E56B8132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

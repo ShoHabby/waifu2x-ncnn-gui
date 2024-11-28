@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace Waifu2xAvalonia.Views;
+namespace Waifu2x.Views;
 
 public partial class MainWindow : Window
 {

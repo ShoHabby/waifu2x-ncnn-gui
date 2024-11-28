@@ -1,12 +1,13 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="Waifu2xAvalonia.App"
-             xmlns:local="using:Waifu2xAvalonia"
+             x:Class="Waifu2x.App"
+             xmlns:local="using:Waifu2x"
+             xmlns:waifu2X="clr-namespace:Waifu2x"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <waifu2X:ViewLocator/>
     </Application.DataTemplates>
 
     <Application.Styles>

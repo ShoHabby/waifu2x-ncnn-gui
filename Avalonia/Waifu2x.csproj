@@ -6,7 +6,9 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <LangVersion>preview</LangVersion>
+        <LangVersion>13</LangVersion>
+        <AssemblyName>Waifu2x</AssemblyName>
+        <RootNamespace>Waifu2x</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,6 +25,7 @@
             <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="BinToss.GroupBox.Avalonia" Version="1.0.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1"/>
     </ItemGroup>
 

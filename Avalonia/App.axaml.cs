@@ -1,13 +1,13 @@
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
-using Waifu2xAvalonia.ViewModels;
-using Waifu2xAvalonia.Views;
+using Waifu2x.ViewModels;
+using Waifu2x.Views;
 
-namespace Waifu2xAvalonia;
+namespace Waifu2x;
 
 public class App : Application
 {

@@ -1,11 +1,12 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Waifu2xAvalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gb="using:GroupBox.Avalonia.Controls"
+        xmlns:vm="clr-namespace:Waifu2x.ViewModels"
         mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="500" Padding="5"
         x:CompileBindings="True"
-        x:Class="Waifu2xAvalonia.Views.MainWindow"
+        x:Class="Waifu2x.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/atriangy.ico"
         Title="Waifu2x">
@@ -14,5 +15,16 @@
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+
+    <StackPanel x:Name="Root" Margin="5">
+        <gb:GroupBox Header="Files">
+            <StackPanel>
+                <TextBox>
+
+                </TextBox>
+            </StackPanel>
+        </gb:GroupBox>
+
+    </StackPanel>
 
 </Window>

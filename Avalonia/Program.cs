@@ -1,7 +1,7 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+using Avalonia;
 
-namespace Waifu2xAvalonia;
+namespace Waifu2x;
 
 internal static class Program
 {
