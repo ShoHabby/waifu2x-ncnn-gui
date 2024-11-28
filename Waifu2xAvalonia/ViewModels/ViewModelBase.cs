@@ -2,4 +2,4 @@
 
 namespace Waifu2xAvalonia.ViewModels;
 
-public class ViewModelBase : ObservableObject { }
+public class ViewModelBase : ObservableObject;
