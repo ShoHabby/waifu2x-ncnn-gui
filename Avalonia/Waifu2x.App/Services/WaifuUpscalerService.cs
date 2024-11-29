@@ -25,20 +25,38 @@ public class WaifuUpscalerService : IUpscalerService
         waifuProcess.EnableRaisingEvents = true;
         waifuProcess.StartInfo = new ProcessStartInfo
         {
-            FileName        = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
-            Arguments       = options.GetArguments(),
-            UseShellExecute = false
+            FileName               = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
+            Arguments              = options.GetArguments(),
+            UseShellExecute        = false,
+            CreateNoWindow         = true,
+            RedirectStandardError  = true,
+            RedirectStandardOutput = true
         };
 
-        waifuProcess.Start();
-        await waifuProcess.WaitForExitAsync();
-        waifuProcess.Close();
+        waifuProcess.OutputDataReceived += WaifuProcessOnOutputDataReceived;
+        waifuProcess.ErrorDataReceived  += WaifuProcessOnOutputDataReceived;
 
+        waifuProcess.Start();
+        waifuProcess.BeginOutputReadLine();
+        waifuProcess.BeginErrorReadLine();
+        await waifuProcess.WaitForExitAsync();
+
+        waifuProcess.CancelOutputRead();
+        waifuProcess.CancelErrorRead();
+        waifuProcess.Close();
         Log("Waifu process completed");
 
         if (options.ConvertGrayscale)
         {
             await RunGrayscaleConversion(options);
+        }
+    }
+
+    private static void WaifuProcessOnOutputDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Data))
+        {
+            Log(e.Data);
         }
     }
 

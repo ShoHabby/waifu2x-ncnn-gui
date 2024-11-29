@@ -115,30 +115,39 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
 
     private async Task RunUpscale()
     {
-        UpscaleOptions upscaleOptions = new()
+        try
         {
-            InputPath        = this.InputPath!,
-            OutputPath       = this.OutputPath,
-            ScaleFactor      = this.Scale,
-            DenoiseLevel     = this.DenoiseLevel,
-            Format           = this.Format,
-            ConvertGrayscale = this.Grayscale,
-            TTAMode          = this.TtaMode,
-
-            ThreadOptions = new ThreadOptions
+            UpscaleOptions upscaleOptions = new()
             {
-                DecodeThreads  = this.DecodeThreads,
-                UpscaleThreads = this.UpscaleThreads,
-                EncodeThreads  = this.EncodeThreads
-            }
-        };
+                InputPath        = this.InputPath!,
+                OutputPath       = this.OutputPath,
+                ScaleFactor      = this.Scale,
+                DenoiseLevel     = this.DenoiseLevel,
+                Format           = this.Format,
+                ConvertGrayscale = this.Grayscale,
+                TTAMode          = this.TtaMode,
 
-        this.IsEnabled       = false;
-        this.ProgressMarquee = true;
-        await this.upscalerService.RunUpscaler(upscaleOptions);
-        this.Progress        = 0;
-        this.ProgressMarquee = false;
-        this.IsEnabled       = true;
+                ThreadOptions = new ThreadOptions
+                {
+                    DecodeThreads  = this.DecodeThreads,
+                    UpscaleThreads = this.UpscaleThreads,
+                    EncodeThreads  = this.EncodeThreads
+                }
+            };
+            this.IsEnabled       = false;
+            this.ProgressMarquee = true;
+            await this.upscalerService.RunUpscaler(upscaleOptions);
+        }
+        catch (Exception e)
+        {
+            AddLog("Unhandled error: " + e.Message);
+        }
+        finally
+        {
+            this.Progress        = 0;
+            this.ProgressMarquee = false;
+            this.IsEnabled       = true;
+        }
     }
 
     public void Receive(LogMessage message) => AddLog(message.Message);
