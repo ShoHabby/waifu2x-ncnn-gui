@@ -14,6 +14,9 @@ using Waifu2x.Views;
 
 namespace Waifu2x;
 
+/// <summary>
+/// Application root
+/// </summary>
 public class App : Application
 {
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
@@ -30,6 +33,7 @@ public class App : Application
         // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
         DisableAvaloniaDataAnnotationValidation();
 
+        // Generate Dialog service
         ServiceCollection services = new();
         services.AddSingleton<IDialogService, DialogService>(provider =>
         {
@@ -38,10 +42,12 @@ public class App : Application
             return new DialogService(new DialogManager(locator, dialogFactory), provider.GetRequiredService);
         });
 
+        // Add other services
         services.AddSingleton<IStorageService, StorageService>();
         services.AddSingleton<IUpscalerService, WaifuUpscalerService>();
         services.AddTransient<MainWindowViewModel>();
 
+        // Start and inject
         ServiceProvider provider = services.BuildServiceProvider();
         desktop.MainWindow = new MainWindow
         {

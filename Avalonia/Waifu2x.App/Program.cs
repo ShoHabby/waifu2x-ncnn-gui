@@ -3,6 +3,9 @@ using Avalonia;
 
 namespace Waifu2x;
 
+/// <summary>
+/// Entry point
+/// </summary>
 internal static class Program
 {
     // Initialization code. Don't use any Avalonia, third-party APIs or any

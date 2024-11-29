@@ -9,40 +9,35 @@ namespace Waifu2x.Core.ViewModels;
 
 public partial class MainWindowViewModel
 {
-    private static readonly ReadOnlyCollection<FileFilter> AllowedFiles;
-
-    static MainWindowViewModel()
+    private static readonly ReadOnlyCollection<FileFilter> AllowedFiles = new([new FileFilter
     {
-        FileFilter filter = new()
-        {
-            Name                        = "Images",
-            Extensions                  = ["jpg", "png", "webp"],
-            AppleUniformTypeIdentifiers = ["public.jpeg", "public.png", "org.webmproject.webp"],
-            MimeTypes                   = ["image/jpeg", "image/png", "image/webp"]
-        };
-        AllowedFiles = new ReadOnlyCollection<FileFilter>([filter]);
-    }
+        Name                        = "Images",
+        Extensions                  = ["jpg", "png", "webp"],
+        AppleUniformTypeIdentifiers = ["public.jpeg", "public.png", "org.webmproject.webp"],
+        MimeTypes                   = ["image/jpeg", "image/png", "image/webp"]
+    }]);
 
     [ObservableProperty]
     private bool isFolder = true;
-
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunRequestedCommand))]
     private string? inputPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
     [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunRequestedCommand))]
     private string outputSuffix = "_waifu";
 
     private string OutputPath => this.IsFolder ? this.InputPath + this.OutputSuffix
                                                : $"{Path.GetFileNameWithoutExtension(this.InputPath)}{this.OutputSuffix}.{this.Format}";
 
+    /// <summary>
+    /// Opens the file/folder browser
+    /// </summary>
     [RelayCommand]
     private async Task Browse()
     {
         IDialogStorageItem? item;
         if (this.IsFolder)
         {
+            // Get current folder data then open folder browser
             IDialogStorageFolder? startFolder = await this.storageService.GetFolderDialogData(this.InputPath!);
-
             OpenFolderDialogSettings settings = new()
             {
                 Title                  = "Select Folder",
@@ -52,8 +47,8 @@ public partial class MainWindowViewModel
         }
         else
         {
+            // Get current file data then open file browser
             (string? name, IDialogStorageFolder? startFolder) = await this.storageService.GetFileDialogData(this.InputPath!);
-
             OpenFileDialogSettings settings = new()
             {
                 Title                  = "Select Image",
@@ -67,6 +62,7 @@ public partial class MainWindowViewModel
 
         if (item is not null && !string.IsNullOrWhiteSpace(item.Path.AbsolutePath))
         {
+            // Sanitize path
             string path = Uri.UnescapeDataString(item.Path.AbsolutePath);
             this.InputPath = path.Replace('/', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
         }

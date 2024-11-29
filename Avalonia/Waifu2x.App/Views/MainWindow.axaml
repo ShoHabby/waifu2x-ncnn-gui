@@ -34,13 +34,13 @@
                 <TextBlock Text="Input" Padding="5" />
                 <TextBox Text="{Binding InputPath}">
                     <TextBox.InnerLeftContent>
-                        <Button Content="Browse" Command="{Binding BrowseCommand}"/>
+                        <Button Content="Browse" Command="{Binding BrowseCommand}" />
                     </TextBox.InnerLeftContent>
                 </TextBox>
 
                 <!-- Output suffix field -->
                 <TextBlock Text="Output Suffix" Padding="5" />
-                <TextBox Text="{Binding OutputSuffix}"/>
+                <TextBox Text="{Binding OutputSuffix}" />
             </StackPanel>
         </gb:GroupBox>
 
@@ -83,7 +83,7 @@
                                FormatString="N0" ParsingNumberStyle="Integer"
                                Value="{Binding DecodeThreads}"
                                HorizontalAlignment="Left"
-                               Width="180" Margin="5 0"/>
+                               Width="180" Margin="5 0" />
 
                 <!-- Upscale threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
@@ -119,13 +119,13 @@
         <ProgressBar DockPanel.Dock="Bottom"
                      Minimum="0" Maximum="{Binding ProgressMax}" Value="{Binding Progress}"
                      IsIndeterminate="{Binding ProgressMarquee}"
-                     Height="30" Margin="0 5"/>
+                     Height="30" Margin="0 5" />
 
         <!-- Run button -->
         <Button DockPanel.Dock="Bottom"
                 Command="{Binding RunRequestedCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
-            <TextBlock Text="Run" FontSize="24" FontWeight="Bold"/>
+            <TextBlock Text="Run" FontSize="24" FontWeight="Bold" />
         </Button>
 
 

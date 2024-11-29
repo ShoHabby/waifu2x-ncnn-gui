@@ -11,8 +11,15 @@ using Waifu2x.Core.Services;
 
 namespace Waifu2x.Services;
 
+/// <summary>
+/// Avalonia storage service
+/// </summary>
 internal class StorageService : IStorageService
 {
+    /// <summary>
+    /// Gets the current top level application
+    /// </summary>
+    /// <returns>Top level app</returns>
     private static TopLevel? GetTopLevel() => Application.Current?.ApplicationLifetime switch
     {
         IClassicDesktopStyleApplicationLifetime desktop => desktop.MainWindow,
@@ -20,8 +27,12 @@ internal class StorageService : IStorageService
         _                                               => null
     };
 
+    /// <summary>
+    /// Gets the current storage provider
+    /// </summary>
     private static IStorageProvider? StorageProvider => field ??= GetTopLevel()?.StorageProvider;
 
+    /// <inheritdoc cref="IStorageService.GetFileDialogData"/>
     public async Task<(string? Name, IDialogStorageFolder? StartFolder)> GetFileDialogData(string path)
     {
         if (StorageProvider is null) return (null, null);
@@ -52,6 +63,7 @@ internal class StorageService : IStorageService
         return name is not null && startFolder is not null ? (name, startFolder.ToDialog()) : (null, null);
     }
 
+    /// <inheritdoc cref="IStorageService.GetFolderDialogData"/>
     public async Task<IDialogStorageFolder?> GetFolderDialogData(string path)
     {
         if (StorageProvider is null) return null;
