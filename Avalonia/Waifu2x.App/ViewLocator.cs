@@ -1,7 +1,8 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Waifu2x.ViewModels;
+using Waifu2x.Core.ViewModels;
+using Waifu2x.ViewsModels;
 
 namespace Waifu2x;
 

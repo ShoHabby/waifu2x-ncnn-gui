@@ -7,8 +7,8 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <LangVersion>13</LangVersion>
-        <AssemblyName>Waifu2x</AssemblyName>
         <RootNamespace>Waifu2x</RootNamespace>
+        <PackageId>Waifu2x.App</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,6 +31,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\" />
+      <UpToDateCheckInput Remove="Views\FilesGroup.axaml" />
+      <UpToDateCheckInput Remove="Views\MainWindow.axaml" />
+      <UpToDateCheckInput Remove="Views\SettingsGroup.axaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Waifu2x.Core\Waifu2x.Core.csproj" />
     </ItemGroup>
 </Project>

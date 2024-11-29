@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Waifu2x.ViewModels;
+namespace Waifu2x.Core.ViewModels;
 
 public partial class MainWindowViewModel(FileGroupViewModel fileGroupViewModel, SettingsGroupViewModel settingsGroupViewModel) : ViewModelBase
 {
@@ -17,8 +17,8 @@ public partial class MainWindowViewModel(FileGroupViewModel fileGroupViewModel, 
     [RelayCommand]
     private void RunWaifu()
     {
-        Debug.WriteLine(this.SettingsGroupViewModel.Scale);
-        Debug.WriteLine(this.SettingsGroupViewModel.DenoiseLevel);
-        Debug.WriteLine(this.SettingsGroupViewModel.Format);
+        Debug.WriteLine((object?)this.SettingsGroupViewModel.Scale);
+        Debug.WriteLine((object?)this.SettingsGroupViewModel.DenoiseLevel);
+        Debug.WriteLine((string?)this.SettingsGroupViewModel.Format);
     }
 }

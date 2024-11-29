@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:gb="using:GroupBox.Avalonia.Controls"
              x:Class="Waifu2x.App"
-             xmlns:local="using:Waifu2x"
              xmlns:waifu2X="clr-namespace:Waifu2x"
              RequestedThemeVariant="Default">
 

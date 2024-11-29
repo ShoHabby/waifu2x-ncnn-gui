@@ -5,9 +5,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using Waifu2x.Core.ViewModels;
 using Waifu2x.Services;
-using Waifu2x.ViewModels;
 using Waifu2x.Views;
+using Waifu2x.ViewsModels;
+using Waifu2x.ViewsModels.Services;
 
 namespace Waifu2x;
 

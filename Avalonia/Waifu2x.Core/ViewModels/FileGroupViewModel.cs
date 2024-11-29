@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Waifu2x.Services;
+using Waifu2x.ViewsModels.Services;
 
-namespace Waifu2x.ViewModels;
+namespace Waifu2x.Core.ViewModels;
 
 public partial class FileGroupViewModel(IFileDialogService fileDialogService) : ViewModelBase
 {
@@ -16,14 +15,14 @@ public partial class FileGroupViewModel(IFileDialogService fileDialogService) : 
     [ObservableProperty]
     private string outputSuffix = "_waifu";
 
-    public FileGroupViewModel() : this(new FileDialogService()) { }
+    public FileGroupViewModel() : this(null!) { }
 
     [RelayCommand]
     private async Task Browse()
     {
-        string? path = await (this.IsFolder
-                                  ? fileDialogService.ShowOpenFolderDialog("Select Folder", this.InputPath!)
-                                  : fileDialogService.ShowOpenFileDialog("Select Image", this.InputPath!));
+        string path = await (this.IsFolder
+                                 ? fileDialogService.ShowOpenFolderDialog("Select Folder", this.InputPath!)
+                                 : fileDialogService.ShowOpenFileDialog("Select Image", this.InputPath!));
 
         if (!string.IsNullOrEmpty(path))
         {

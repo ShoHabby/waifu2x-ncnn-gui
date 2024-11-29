@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
+using Waifu2x.ViewsModels.Services;
 
 namespace Waifu2x.Services;
 
-public class FileDialogService : IFileDialogService
+internal class FileDialogService : IFileDialogService
 {
     private static readonly ReadOnlyCollection<FilePickerFileType> AllowedFiles;
 

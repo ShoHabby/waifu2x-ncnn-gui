@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Waifu2x.Services;
+﻿namespace Waifu2x.ViewsModels.Services;
 
 public interface IFileDialogService
 {

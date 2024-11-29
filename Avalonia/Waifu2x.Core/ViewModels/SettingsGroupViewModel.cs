@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Waifu2x.ViewModels;
+namespace Waifu2x.Core.ViewModels;
 
 public partial class SettingsGroupViewModel : ViewModelBase
 {
