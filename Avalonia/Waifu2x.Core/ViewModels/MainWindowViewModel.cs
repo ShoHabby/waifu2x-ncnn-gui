@@ -1,13 +1,16 @@
 ﻿using System.Collections.ObjectModel;
+using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using HanumanInstitute.MvvmDialogs;
 using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
+using Waifu2x.Core.Messages;
 using Waifu2x.Core.Services;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class MainWindowViewModel(IStorageService storageService, IDialogService dialogService, IUpscalerService upscalerService) : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
 {
     public ObservableCollection<string> Log { get; } = [];
 
@@ -15,6 +18,20 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
 
     [ObservableProperty]
     private bool isEnabled = true;
+
+    private readonly IStorageService storageService1;
+    private readonly IDialogService dialogService1;
+    private readonly IUpscalerService upscalerService1;
+
+    /// <inheritdoc/>
+    public MainWindowViewModel(IStorageService storageService, IDialogService dialogService, IUpscalerService upscalerService)
+    {
+        this.storageService1  = storageService;
+        this.dialogService1   = dialogService;
+        this.upscalerService1 = upscalerService;
+
+        StrongReferenceMessenger.Default.Register(this);
+    }
 
     /// <summary>
     /// Validates the input/output paths
@@ -34,14 +51,14 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
 
         if (!input.Exists)
         {
-            await dialogService.ShowMessageBoxAsync(this, $"The selected input {type} does not exist.", "Error", icon: MessageBoxImage.Error);
+            await this.dialogService1.ShowMessageBoxAsync(this, $"The selected input {type} does not exist.", "Error", icon: MessageBoxImage.Error);
             return false;
         }
 
         if (output.Exists)
         {
-            bool? result = await dialogService.ShowMessageBoxAsync(this, $"The output {type} already exists, overwrite file(s)?", "Warning",
-                                                                   button: MessageBoxButton.OkCancel, MessageBoxImage.Error);
+            bool? result = await this.dialogService1.ShowMessageBoxAsync(this, $"The output {type} already exists, overwrite file(s)?", "Warning",
+                                                                         button: MessageBoxButton.OkCancel, MessageBoxImage.Error);
             return result is not null;
         }
 
@@ -55,10 +72,9 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
 
     private void AddLog(string? message)
     {
-        if (!string.IsNullOrEmpty(message))
-        {
-            this.Log.Add(message);
-        }
+        if (string.IsNullOrEmpty(message)) return;
+
+        this.Log.Add(message);
     }
 
     private bool CanRequestRun() => !string.IsNullOrWhiteSpace(this.InputPath)
@@ -71,7 +87,7 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
         bool isDir = (attributes & FileAttributes.Directory) is not 0;
         if (this.IsFolder != isDir)
         {
-            await dialogService.ShowMessageBoxAsync(this, $"The selected input is not a {(this.IsFolder ? "Folder" : "File")}.", "Error", icon: MessageBoxImage.Error);
+            await this.dialogService1.ShowMessageBoxAsync(this, $"The selected input is not a {(this.IsFolder ? "Folder" : "File")}.", "Error", icon: MessageBoxImage.Error);
             return;
         }
 
@@ -86,7 +102,7 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
         }
         catch (Exception exception)
         {
-            await dialogService.ShowMessageBoxAsync(this, "Invalid path detected.\nError: " + exception.Message, "Error", icon: MessageBoxImage.Error);
+            await this.dialogService1.ShowMessageBoxAsync(this, "Invalid path detected.\nError: " + exception.Message, "Error", icon: MessageBoxImage.Error);
         }
     }
 
@@ -111,7 +127,9 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
         };
 
         this.IsEnabled = false;
-        await upscalerService.RunUpscaler(upscaleOptions);
+        await this.upscalerService1.RunUpscaler(upscaleOptions);
         this.IsEnabled = true;
     }
+
+    public void Receive(LogMessage message) => AddLog(message.Message);
 }

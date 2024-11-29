@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
 using ImageMagick;
+using Waifu2x.Core.Messages;
 using Waifu2x.Core.Services;
 
 namespace Waifu2x.Services;
@@ -17,18 +19,22 @@ public class WaifuUpscalerService : IUpscalerService
 
     public async Task RunUpscaler(UpscaleOptions options)
     {
+        Log("Beginning Waifu upscale process...");
+
         using Process waifuProcess = new();
         waifuProcess.EnableRaisingEvents = true;
         waifuProcess.StartInfo = new ProcessStartInfo
         {
             FileName        = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
             Arguments       = options.GetArguments(),
-            UseShellExecute = false,
+            UseShellExecute = false
         };
 
         waifuProcess.Start();
         await waifuProcess.WaitForExitAsync();
         waifuProcess.Close();
+
+        Log("Waifu process completed");
 
         if (options.ConvertGrayscale)
         {
@@ -38,16 +44,21 @@ public class WaifuUpscalerService : IUpscalerService
 
     private async Task RunGrayscaleConversion(UpscaleOptions options)
     {
+        Log("Converting images to grayscale...");
+
         bool isFolder = (File.GetAttributes(options.OutputPath) & FileAttributes.Directory) is not 0;
-        if (!isFolder)
+        if (isFolder)
+        {
+            DirectoryInfo outputDir = new(options.OutputPath);
+            FileInfo[] files = outputDir.GetFiles($"*.{options.Format}");
+            await Parallel.ForEachAsync(files, (f, _) => ConvertToGrayAsync(f, options.Format));
+        }
+        else
         {
             await ConvertToGrayAsync(new FileInfo(options.OutputPath), options.Format);
-            return;
         }
 
-        DirectoryInfo outputDir = new(options.OutputPath);
-        FileInfo[] files = outputDir.GetFiles($"*.{options.Format}");
-        await Parallel.ForEachAsync(files, (f, _) => ConvertToGrayAsync(f, options.Format));
+        Log("Grayscale conversion completed");
     }
 
     private ValueTask ConvertToGrayAsync(FileInfo file, string format)
@@ -65,6 +76,10 @@ public class WaifuUpscalerService : IUpscalerService
         image.Settings.Compression = CompressionMethod.NoCompression;
         image.Quantize(GrayscaleSettings);
         image.Write(file);
+
+        Log(file.FullName + " converted to grayscale");
         return ValueTask.CompletedTask;
     }
+
+    private static void Log(string message) => StrongReferenceMessenger.Default.Send(new LogMessage(message));
 }

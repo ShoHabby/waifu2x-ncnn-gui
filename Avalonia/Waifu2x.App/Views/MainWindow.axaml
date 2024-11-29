@@ -132,8 +132,9 @@
                 Background="{DynamicResource SystemBaseLowColor}"
                 CornerRadius="2" BorderThickness="1"
                 Margin="0 5">
-            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <ItemsControl Margin="5" ItemsSource="{Binding Log}" />
+            <ScrollViewer Name="Scroll"
+                          VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+                <ItemsControl Name="Items" Margin="5" ItemsSource="{Binding Log}" />
             </ScrollViewer>
         </Border>
     </DockPanel>
