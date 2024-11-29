@@ -132,7 +132,7 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Grayscale {
             get {
                 return ((bool)(this["Grayscale"]));
@@ -144,7 +144,7 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool TtaMode {
             get {
                 return ((bool)(this["TtaMode"]));

@@ -32,10 +32,10 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="Grayscale" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="TtaMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Width" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">650</Value>

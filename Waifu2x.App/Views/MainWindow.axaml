@@ -54,61 +54,73 @@
                   Margin="5">
                 <!-- Scale selector -->
                 <TextBlock Grid.Row="0" Grid.Column="0"
+                           ToolTip.Tip="Image upscaling factor"
                            Text="Scale" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="0"
                           Name="Scale"
                           ItemsSource="{Binding ScaleFactors}"
                           SelectedItem="{Binding Scale}"
+                          ToolTip.Tip="Image upscaling factor"
                           Width="180" Margin="5 0" />
 
                 <!-- Denoise selector -->
                 <TextBlock Grid.Row="0" Grid.Column="1"
+                           ToolTip.Tip="JPG denoising aggressiveness"
                            Text="Denoise Level" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="1"
                           Name="DenoiseLevel"
                           ItemsSource="{Binding DenoiseLevels}"
                           SelectedIndex="{Binding DenoiseLevel}"
+                          ToolTip.Tip="JPG denoising aggressiveness"
                           Width="180" Margin="5 0" />
 
                 <!-- Format selector -->
                 <TextBlock Grid.Row="0" Grid.Column="2"
+                           ToolTip.Tip="Output file format"
                            Text="Format" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="2"
                           Name="Format"
                           ItemsSource="{Binding OutputFormats}"
                           SelectedItem="{Binding Format}"
+                          ToolTip.Tip="Output file format"
                           Width="180" Margin="5 0" />
 
                 <!-- Decode threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
+                           ToolTip.Tip="File decoding GPU threads"
                            Text="Decode Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="0"
                                Name="DecodeThreads"
                                Increment="1" Minimum="1"
                                FormatString="N0" ParsingNumberStyle="Integer"
                                Value="{Binding DecodeThreads}"
+                               ToolTip.Tip="File decoding GPU threads"
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
                 <!-- Upscale threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
+                           ToolTip.Tip="File upscaling GPU threads"
                            Text="Upscale Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="1"
                                Name="UpscaleThreads"
                                Increment="1" Minimum="1"
                                FormatString="N0" ParsingNumberStyle="Integer"
                                Value="{Binding UpscaleThreads}"
+                               ToolTip.Tip="File upscaling GPU threads"
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
                 <!-- Encode threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="2"
+                           ToolTip.Tip="File encoding GPU threads"
                            Text="Encode Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="2"
                                Name="EncodeThreads"
                                Increment="1" Minimum="1"
                                FormatString="N0" ParsingNumberStyle="Integer"
                                Value="{Binding EncodeThreads}"
+                               ToolTip.Tip="File encoding GPU threads"
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
@@ -116,10 +128,12 @@
                 <CheckBox Grid.Row="4" Grid.Column="0"
                           Name="Grayscale"
                           IsChecked="{Binding Grayscale}"
+                          ToolTip.Tip="Converts files to grayscale after upscaling them"
                           Content="Convert to Grayscale" Margin="5" />
                 <CheckBox Grid.Row="4" Grid.Column="1"
                           Name="TtaMode"
                           IsChecked="{Binding TtaMode}"
+                          ToolTip.Tip="TTA Mode may produce higher quality result at the cost of upscaling the file eight times"
                           Content="TTA Mode" Margin="5" />
             </Grid>
         </gb:GroupBox>
