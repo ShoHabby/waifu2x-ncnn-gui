@@ -41,18 +41,18 @@ public partial class MainWindowViewModel
         IDialogStorageItem? item;
         if (this.IsFolder)
         {
-            IDialogStorageFolder? startFolder = await this.storageService1.GetFolderDialogData(this.InputPath!);
+            IDialogStorageFolder? startFolder = await this.storageService.GetFolderDialogData(this.InputPath!);
 
             OpenFolderDialogSettings settings = new()
             {
                 Title                  = "Select Folder",
                 SuggestedStartLocation = startFolder
             };
-            item = await this.dialogService1.ShowOpenFolderDialogAsync(this, settings);
+            item = await this.dialogService.ShowOpenFolderDialogAsync(this, settings);
         }
         else
         {
-            (string? name, IDialogStorageFolder? startFolder) = await this.storageService1.GetFileDialogData(this.InputPath!);
+            (string? name, IDialogStorageFolder? startFolder) = await this.storageService.GetFileDialogData(this.InputPath!);
 
             OpenFileDialogSettings settings = new()
             {
@@ -62,12 +62,13 @@ public partial class MainWindowViewModel
                 SuggestedFileName      = name ?? string.Empty,
                 SuggestedStartLocation = startFolder
             };
-            item = await this.dialogService1.ShowOpenFileDialogAsync(this, settings);
+            item = await this.dialogService.ShowOpenFileDialogAsync(this, settings);
         }
 
         if (item is not null && !string.IsNullOrWhiteSpace(item.Path.AbsolutePath))
         {
-            this.InputPath = item.Path.AbsolutePath.Replace('/', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
+            string path = Uri.UnescapeDataString(item.Path.AbsolutePath);
+            this.InputPath = path.Replace('/', Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar);
         }
     }
 }

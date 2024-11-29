@@ -117,6 +117,8 @@
 
         <!-- Progress bar -->
         <ProgressBar DockPanel.Dock="Bottom"
+                     Minimum="0" Maximum="{Binding ProgressMax}" Value="{Binding Progress}"
+                     IsIndeterminate="{Binding ProgressMarquee}"
                      Height="30" Margin="0 5"/>
 
         <!-- Run button -->

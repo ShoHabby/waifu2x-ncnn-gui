@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Avalonia;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,7 +9,7 @@ using Waifu2x.Core.Services;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
+public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>, IRecipient<ReportProgressMessage>
 {
     public ObservableCollection<string> Log { get; } = [];
 
@@ -18,19 +17,26 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
 
     [ObservableProperty]
     private bool isEnabled = true;
+    [ObservableProperty]
+    private int progressMax = 100;
+    [ObservableProperty]
+    private int progress;
+    [ObservableProperty]
+    private bool progressMarquee;
 
-    private readonly IStorageService storageService1;
-    private readonly IDialogService dialogService1;
-    private readonly IUpscalerService upscalerService1;
+    private readonly IStorageService storageService;
+    private readonly IDialogService dialogService;
+    private readonly IUpscalerService upscalerService;
 
     /// <inheritdoc/>
     public MainWindowViewModel(IStorageService storageService, IDialogService dialogService, IUpscalerService upscalerService)
     {
-        this.storageService1  = storageService;
-        this.dialogService1   = dialogService;
-        this.upscalerService1 = upscalerService;
+        this.storageService  = storageService;
+        this.dialogService   = dialogService;
+        this.upscalerService = upscalerService;
 
-        StrongReferenceMessenger.Default.Register(this);
+        StrongReferenceMessenger.Default.Register<LogMessage>(this);
+        StrongReferenceMessenger.Default.Register<ReportProgressMessage>(this);
     }
 
     /// <summary>
@@ -51,13 +57,13 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
 
         if (!input.Exists)
         {
-            await this.dialogService1.ShowMessageBoxAsync(this, $"The selected input {type} does not exist.", "Error", icon: MessageBoxImage.Error);
+            await this.dialogService.ShowMessageBoxAsync(this, $"The selected input {type} does not exist.", "Error", icon: MessageBoxImage.Error);
             return false;
         }
 
         if (output.Exists)
         {
-            bool? result = await this.dialogService1.ShowMessageBoxAsync(this, $"The output {type} already exists, overwrite file(s)?", "Warning",
+            bool? result = await this.dialogService.ShowMessageBoxAsync(this, $"The output {type} already exists, overwrite file(s)?", "Warning",
                                                                          button: MessageBoxButton.OkCancel, MessageBoxImage.Error);
             return result is not null;
         }
@@ -72,9 +78,10 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
 
     private void AddLog(string? message)
     {
-        if (string.IsNullOrEmpty(message)) return;
-
-        this.Log.Add(message);
+        if (!string.IsNullOrEmpty(message))
+        {
+            this.Log.Add(message);
+        }
     }
 
     private bool CanRequestRun() => !string.IsNullOrWhiteSpace(this.InputPath)
@@ -87,7 +94,7 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
         bool isDir = (attributes & FileAttributes.Directory) is not 0;
         if (this.IsFolder != isDir)
         {
-            await this.dialogService1.ShowMessageBoxAsync(this, $"The selected input is not a {(this.IsFolder ? "Folder" : "File")}.", "Error", icon: MessageBoxImage.Error);
+            await this.dialogService.ShowMessageBoxAsync(this, $"The selected input is not a {(this.IsFolder ? "Folder" : "File")}.", "Error", icon: MessageBoxImage.Error);
             return;
         }
 
@@ -102,7 +109,7 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
         }
         catch (Exception exception)
         {
-            await this.dialogService1.ShowMessageBoxAsync(this, "Invalid path detected.\nError: " + exception.Message, "Error", icon: MessageBoxImage.Error);
+            await this.dialogService.ShowMessageBoxAsync(this, "Invalid path detected.\nError: " + exception.Message, "Error", icon: MessageBoxImage.Error);
         }
     }
 
@@ -126,10 +133,26 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
             }
         };
 
-        this.IsEnabled = false;
-        await this.upscalerService1.RunUpscaler(upscaleOptions);
-        this.IsEnabled = true;
+        this.IsEnabled       = false;
+        this.ProgressMarquee = true;
+        await this.upscalerService.RunUpscaler(upscaleOptions);
+        this.Progress        = 0;
+        this.ProgressMarquee = false;
+        this.IsEnabled       = true;
     }
 
     public void Receive(LogMessage message) => AddLog(message.Message);
+
+    public void Receive(ReportProgressMessage message)
+    {
+        if (message.MaxValue is null)
+        {
+            this.Progress++;
+            return;
+        }
+
+        this.ProgressMarquee = false;
+        this.Progress        = 0;
+        this.ProgressMax     = message.MaxValue.Value;
+    }
 }

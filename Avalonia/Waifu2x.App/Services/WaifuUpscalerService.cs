@@ -12,8 +12,8 @@ public class WaifuUpscalerService : IUpscalerService
 {
     private static readonly QuantizeSettings GrayscaleSettings = new()
     {
-        Colors     = 256,
-        ColorSpace = ColorSpace.Gray,
+        Colors       = 256u,
+        ColorSpace   = ColorSpace.Gray,
         DitherMethod = DitherMethod.No
     };
 
@@ -51,6 +51,7 @@ public class WaifuUpscalerService : IUpscalerService
         {
             DirectoryInfo outputDir = new(options.OutputPath);
             FileInfo[] files = outputDir.GetFiles($"*.{options.Format}");
+            StrongReferenceMessenger.Default.Send(new ReportProgressMessage(files.Length));
             await Parallel.ForEachAsync(files, (f, _) => ConvertToGrayAsync(f, options.Format));
         }
         else
@@ -78,6 +79,7 @@ public class WaifuUpscalerService : IUpscalerService
         image.Write(file);
 
         Log(file.FullName + " converted to grayscale");
+        StrongReferenceMessenger.Default.Send(new ReportProgressMessage());
         return ValueTask.CompletedTask;
     }
 
