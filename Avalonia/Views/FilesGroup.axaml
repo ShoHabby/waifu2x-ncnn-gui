@@ -1,0 +1,36 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Waifu2x.ViewModels"
+             xmlns:gb="using:GroupBox.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Waifu2x.Views.FilesGroup"
+             x:DataType="vm:FileGroupViewModel">
+
+    <!-- Designer only -->
+    <Design.DataContext>
+        <vm:FileGroupViewModel/>
+    </Design.DataContext>
+
+    <gb:GroupBox Header="Files" Theme="{StaticResource GroupBoxClassic}">
+        <StackPanel Spacing="5" Margin="5">
+            <TextBlock Text="Input Type" Padding="5" />
+            <StackPanel Orientation="Horizontal" Spacing="10" Margin="5 0">
+                <RadioButton GroupName="InputType" Content="Folder" IsChecked="{Binding IsFolder}" />
+                <RadioButton GroupName="InputType" Content="Files" />
+            </StackPanel>
+
+            <TextBlock Text="Input" Padding="5" />
+            <TextBox Text="{Binding InputPath}">
+                <TextBox.InnerLeftContent>
+                    <Button Content="Browse" Command="{Binding BrowseCommand}"/>
+                </TextBox.InnerLeftContent>
+            </TextBox>
+
+            <TextBlock Text="Output Suffix" Padding="5" />
+            <TextBox Text="{Binding OutputSuffix}"/>
+        </StackPanel>
+    </gb:GroupBox>
+
+</UserControl>

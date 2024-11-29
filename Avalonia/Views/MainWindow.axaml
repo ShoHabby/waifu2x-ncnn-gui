@@ -2,9 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:gb="using:GroupBox.Avalonia.Controls"
         xmlns:vm="clr-namespace:Waifu2x.ViewModels"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="850" Padding="5"
+        xmlns:v="clr-namespace:Waifu2x.Views"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
+        MinWidth="650" MinHeight="700" Padding="2"
         x:CompileBindings="True"
         x:Class="Waifu2x.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -17,82 +18,16 @@
     </Design.DataContext>
 
     <DockPanel Name="Root" Margin="5" >
-        <gb:GroupBox DockPanel.Dock="Top"
-                     Header="Files" Theme="{StaticResource GroupBoxClassic}">
-            <StackPanel Spacing="5" Margin="5">
-                <TextBlock Text="Input Type" Padding="5" />
-                <StackPanel Orientation="Horizontal" Spacing="10" Margin="5 0">
-                    <RadioButton GroupName="InputType" Content="Folder" />
-                    <RadioButton GroupName="InputType" Content="Files" />
-                </StackPanel>
+        <v:FilesGroup DockPanel.Dock="Top" DataContext="{Binding FileGroupViewModel}" />
 
-                <TextBlock Text="Input" Padding="5" />
-                <TextBox>
-                    <TextBox.InnerLeftContent>
-                        <Button Content="Browse" />
-                    </TextBox.InnerLeftContent>
-                </TextBox>
+        <v:SettingsGroup DockPanel.Dock="Top" DataContext="{Binding SettingsGroupViewModel}" />
 
-                <TextBlock Text="Output Suffix" Padding="5" />
-                <TextBox />
-            </StackPanel>
-        </gb:GroupBox>
+        <ProgressBar DockPanel.Dock="Bottom"
+                     Height="30" Margin="0 5"/>
 
-        <gb:GroupBox DockPanel.Dock="Top"
-                     Header="Settings" Theme="{StaticResource GroupBoxClassic}">
-            <Grid RowDefinitions="auto, auto, auto, auto, auto"
-                  ColumnDefinitions="200, 200, 200"
-                  Margin="5">
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Scale" Margin="5" />
-                <ComboBox Grid.Row="1" Grid.Column="0"
-                          ItemsSource="{Binding ScaleFactors}"
-                          Width="180" Margin="5 0" />
-
-                <TextBlock Grid.Row="0" Grid.Column="1"
-                           Text="Denoise Level" Margin="5" />
-                <ComboBox Grid.Row="1" Grid.Column="1"
-                          ItemsSource="{Binding DenoiseLevels}"
-                          Width="180" Margin="5 0" />
-
-                <TextBlock Grid.Row="0" Grid.Column="2"
-                           Text="Format" Margin="5" />
-                <ComboBox Grid.Row="1" Grid.Column="2"
-                          ItemsSource="{Binding OutputFormats}"
-                          Width="180" Margin="5 0" />
-
-                <TextBlock Grid.Row="2" Grid.Column="0"
-                           Text="Decode Threads" Margin="5" />
-                <NumericUpDown Grid.Row="3" Grid.Column="0"
-                               Increment="1" Minimum="1"
-                               FormatString="N0" ParsingNumberStyle="Integer"
-                               HorizontalAlignment="Left"
-                               Width="180" Margin="5 0"/>
-
-                <TextBlock Grid.Row="2" Grid.Column="1"
-                           Text="Upscale Threads" Margin="5" />
-                <NumericUpDown Grid.Row="3" Grid.Column="1"
-                               Increment="1" Minimum="1"
-                               FormatString="N0" ParsingNumberStyle="Integer"
-                               HorizontalAlignment="Left"
-                               Width="180" Margin="5 0" />
-
-                <TextBlock Grid.Row="2" Grid.Column="2"
-                           Text="Encode Threads" Margin="5" />
-                <NumericUpDown Grid.Row="3" Grid.Column="2"
-                               Increment="1" Minimum="1"
-                               FormatString="N0" ParsingNumberStyle="Integer"
-                               HorizontalAlignment="Left"
-                               Width="180" Margin="5 0" />
-
-                <CheckBox Grid.Row="4" Grid.Column="0"
-                          Content="Convert to Grayscale" Margin="5" />
-                <CheckBox Grid.Row="4" Grid.Column="1"
-                          Content="TTA Mode" Margin="5" />
-            </Grid>
-        </gb:GroupBox>
-
-        <Button DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+        <Button DockPanel.Dock="Bottom"
+                Command="{Binding RunWaifuCommand}"
+                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
             <TextBlock Text="Run" FontSize="24" FontWeight="Bold"/>
         </Button>
 
@@ -104,7 +39,5 @@
                 <ItemsControl Margin="5" ItemsSource="{Binding Log}" />
             </ScrollViewer>
         </Border>
-
     </DockPanel>
-
 </Window>

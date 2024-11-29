@@ -2,4 +2,4 @@
 
 namespace Waifu2x.ViewModels;
 
-public class ViewModelBase : ObservableObject;
+public abstract class ViewModelBase : ObservableObject;

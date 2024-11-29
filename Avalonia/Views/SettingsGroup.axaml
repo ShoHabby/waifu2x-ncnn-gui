@@ -1,0 +1,77 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Waifu2x.ViewModels"
+             xmlns:gb="using:GroupBox.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Waifu2x.Views.SettingsGroup"
+             x:DataType="vm:SettingsGroupViewModel">
+
+    <!-- Designer only -->
+    <Design.DataContext>
+        <vm:SettingsGroupViewModel/>
+    </Design.DataContext>
+
+    <gb:GroupBox DockPanel.Dock="Top"
+                 Header="Settings" Theme="{StaticResource GroupBoxClassic}">
+        <Grid RowDefinitions="auto, auto, auto, auto, auto"
+              ColumnDefinitions="200, 200, 200"
+              Margin="5">
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Scale" Margin="5" />
+            <ComboBox Grid.Row="1" Grid.Column="0"
+                      ItemsSource="{Binding ScaleFactors}"
+                      SelectedItem="{Binding Scale}"
+                      Width="180" Margin="5 0" />
+
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="Denoise Level" Margin="5" />
+            <ComboBox Grid.Row="1" Grid.Column="1"
+                      ItemsSource="{Binding DenoiseLevels}"
+                      SelectedIndex="{Binding DenoiseLevel}"
+                      Width="180" Margin="5 0" />
+
+            <TextBlock Grid.Row="0" Grid.Column="2"
+                       Text="Format" Margin="5" />
+            <ComboBox Grid.Row="1" Grid.Column="2"
+                      ItemsSource="{Binding OutputFormats}"
+                      SelectedItem="{Binding Format}"
+                      Width="180" Margin="5 0" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="Decode Threads" Margin="5" />
+            <NumericUpDown Grid.Row="3" Grid.Column="0"
+                           Increment="1" Minimum="1"
+                           FormatString="N0" ParsingNumberStyle="Integer"
+                           Value="{Binding DecodeThreads}"
+                           HorizontalAlignment="Left"
+                           Width="180" Margin="5 0"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Upscale Threads" Margin="5" />
+            <NumericUpDown Grid.Row="3" Grid.Column="1"
+                           Increment="1" Minimum="1"
+                           FormatString="N0" ParsingNumberStyle="Integer"
+                           Value="{Binding UpscaleThreads}"
+                           HorizontalAlignment="Left"
+                           Width="180" Margin="5 0" />
+
+            <TextBlock Grid.Row="2" Grid.Column="2"
+                       Text="Encode Threads" Margin="5" />
+            <NumericUpDown Grid.Row="3" Grid.Column="2"
+                           Increment="1" Minimum="1"
+                           FormatString="N0" ParsingNumberStyle="Integer"
+                           Value="{Binding EncodeThreads}"
+                           HorizontalAlignment="Left"
+                           Width="180" Margin="5 0" />
+
+            <CheckBox Grid.Row="4" Grid.Column="0"
+                      IsChecked="{Binding Grayscale}"
+                      Content="Convert to Grayscale" Margin="5" />
+            <CheckBox Grid.Row="4" Grid.Column="1"
+                      IsChecked="{Binding TtaMode}"
+                      Content="TTA Mode" Margin="5" />
+        </Grid>
+    </gb:GroupBox>
+</UserControl>

@@ -1,15 +1,24 @@
-﻿
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Waifu2x.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel(FileGroupViewModel fileGroupViewModel, SettingsGroupViewModel settingsGroupViewModel) : ViewModelBase
 {
-    public ReadOnlyCollection<string> ScaleFactors { get; } = new(["1", "2", "4", "8", "16", "32"]);
-
-    public ReadOnlyCollection<string> DenoiseLevels { get; } = new(["0", "1", "2", "3"]);
-
-    public ReadOnlyCollection<string> OutputFormats { get; } = new(["PNG", "JPG", "WEBP"]);
-
     public ObservableCollection<string> Log { get; } = [];
+
+    public FileGroupViewModel FileGroupViewModel { get; } = fileGroupViewModel;
+
+    public SettingsGroupViewModel SettingsGroupViewModel { get; } = settingsGroupViewModel;
+
+    public MainWindowViewModel() : this(new FileGroupViewModel(), new SettingsGroupViewModel()) { }
+
+    [RelayCommand]
+    private void RunWaifu()
+    {
+        Debug.WriteLine(this.SettingsGroupViewModel.Scale);
+        Debug.WriteLine(this.SettingsGroupViewModel.DenoiseLevel);
+        Debug.WriteLine(this.SettingsGroupViewModel.Format);
+    }
 }
