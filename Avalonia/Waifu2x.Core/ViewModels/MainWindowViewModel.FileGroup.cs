@@ -1,19 +1,17 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using HanumanInstitute.MvvmDialogs;
 using HanumanInstitute.MvvmDialogs.FileSystem;
 using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
-using Waifu2x.Core.Services;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class FileGroupViewModel(IDialogService dialogService, IStorageService storageService) : ViewModelBase
+public partial class MainWindowViewModel
 {
     private static readonly ReadOnlyCollection<FileFilter> AllowedFiles;
 
-    static FileGroupViewModel()
+    static MainWindowViewModel()
     {
         FileFilter filter = new()
         {
@@ -26,18 +24,14 @@ public partial class FileGroupViewModel(IDialogService dialogService, IStorageSe
         AllowedFiles = new ReadOnlyCollection<FileFilter>([filter]);
     }
 
-    internal INotifyPropertyChanged? MainWindow { get; set; }
-
     [ObservableProperty]
     private bool isFolder = true;
 
-    [ObservableProperty]
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunWaifuCommand))]
     private string? inputPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-    [ObservableProperty]
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunWaifuCommand))]
     private string outputSuffix = "_waifu";
-
-    public FileGroupViewModel() : this(null!, null!) { }
 
     [RelayCommand]
     private async Task Browse()
@@ -52,7 +46,7 @@ public partial class FileGroupViewModel(IDialogService dialogService, IStorageSe
                 Title                  = "Select Folder",
                 SuggestedStartLocation = startFolder
             };
-            item = await dialogService.ShowOpenFolderDialogAsync(this.MainWindow, settings);
+            item = await dialogService.ShowOpenFolderDialogAsync(this, settings);
         }
         else
         {
@@ -66,7 +60,7 @@ public partial class FileGroupViewModel(IDialogService dialogService, IStorageSe
                 SuggestedFileName      = name ?? string.Empty,
                 SuggestedStartLocation = startFolder
             };
-            item = await dialogService.ShowOpenFileDialogAsync(this.MainWindow, settings);
+            item = await dialogService.ShowOpenFileDialogAsync(this, settings);
         }
 
         if (item is not null && !string.IsNullOrWhiteSpace(item.Path.AbsolutePath))

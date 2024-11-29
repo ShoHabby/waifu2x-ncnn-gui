@@ -34,12 +34,10 @@ public class App : Application
             {
                 IViewLocator locator = new ViewLocator();
                 IDialogFactory dialogFactory = new DialogFactory().AddMessageBox();
-                return new DialogService(new DialogManager(locator, dialogFactory));
+                return new DialogService(new DialogManager(locator, dialogFactory), provider.GetRequiredService);
             });
 
             services.AddSingleton<IStorageService, StorageService>();
-            services.AddTransient<FileGroupViewModel>();
-            services.AddTransient<SettingsGroupViewModel>();
             services.AddTransient<MainWindowViewModel>();
 
             ServiceProvider provider = services.BuildServiceProvider();

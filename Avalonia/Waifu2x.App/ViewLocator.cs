@@ -9,7 +9,5 @@ public class ViewLocator : StrongViewLocator
     public ViewLocator()
     {
         Register<MainWindowViewModel, MainWindow>();
-        Register<FileGroupViewModel, FileGroup>();
-        Register<SettingsGroupViewModel, SettingsGroup>();
     }
 }

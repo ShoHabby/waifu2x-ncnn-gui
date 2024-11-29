@@ -2,45 +2,25 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
+using HanumanInstitute.MvvmDialogs;
+using Waifu2x.Core.Services;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel(IStorageService storageService, IDialogService dialogService) : ViewModelBase
 {
     public ObservableCollection<string> Log { get; } = [];
 
-    public FileGroupViewModel FileGroupViewModel { get; }
-
-    public SettingsGroupViewModel SettingsGroupViewModel { get; }
-
-    public MainWindowViewModel() : this(new FileGroupViewModel(), new SettingsGroupViewModel()) { }
-
-    /// <inheritdoc/>
-    public MainWindowViewModel(FileGroupViewModel fileGroupViewModel, SettingsGroupViewModel settingsGroupViewModel)
-    {
-        this.FileGroupViewModel     = fileGroupViewModel;
-        this.SettingsGroupViewModel = settingsGroupViewModel;
-
-        this.FileGroupViewModel.MainWindow      =  this;
-        this.FileGroupViewModel.PropertyChanged += FileGroupViewModelOnPropertyChanged;
-    }
-
-    private void FileGroupViewModelOnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName is nameof(this.FileGroupViewModel.InputPath) or nameof(this.FileGroupViewModel.OutputSuffix))
-        {
-            this.RunWaifuCommand.NotifyCanExecuteChanged();
-        }
-    }
+    public MainWindowViewModel() : this(null!, null!) { }
 
     [RelayCommand(CanExecute = nameof(CanRunWaifu))]
     private void RunWaifu()
     {
-        Debug.WriteLine(this.SettingsGroupViewModel.Scale);
-        Debug.WriteLine(this.SettingsGroupViewModel.DenoiseLevel);
-        Debug.WriteLine(this.SettingsGroupViewModel.Format);
+        Debug.WriteLine(this.Scale);
+        Debug.WriteLine(this.DenoiseLevel);
+        Debug.WriteLine(this.Format);
     }
 
-    private bool CanRunWaifu() => !string.IsNullOrWhiteSpace(this.FileGroupViewModel.InputPath)
-                               && !string.IsNullOrWhiteSpace(this.FileGroupViewModel.OutputSuffix);
+    private bool CanRunWaifu() => !string.IsNullOrWhiteSpace(this.InputPath)
+                               && !string.IsNullOrWhiteSpace(this.OutputSuffix);
 }

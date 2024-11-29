@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class SettingsGroupViewModel : ViewModelBase
+public partial class MainWindowViewModel
 {
     public static ReadOnlyCollection<int> ScaleFactors { get; } = new([1, 2, 4, 8, 16, 32]);
 
