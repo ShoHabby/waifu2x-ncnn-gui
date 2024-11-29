@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Waifu2x.Core.Services;
+﻿namespace Waifu2x.Core.Services;
 
 /// <summary>
 /// Upscale output file format

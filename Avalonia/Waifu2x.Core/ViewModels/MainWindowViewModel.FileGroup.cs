@@ -25,7 +25,7 @@ public partial class MainWindowViewModel
     private string outputSuffix = "_waifu";
 
     private string OutputPath => this.IsFolder ? this.InputPath + this.OutputSuffix
-                                               : $"{Path.GetFileNameWithoutExtension(this.InputPath)}{this.OutputSuffix}.{this.Format}";
+                                               : $"{Path.ChangeExtension(this.InputPath, null)}{this.OutputSuffix}.{this.Format.ToString().ToLower()}";
 
     /// <summary>
     /// Opens the file/folder browser

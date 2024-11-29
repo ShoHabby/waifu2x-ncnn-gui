@@ -9,6 +9,7 @@
         <LangVersion>preview</LangVersion>
         <RootNamespace>Waifu2x</RootNamespace>
         <PackageId>Waifu2x.App</PackageId>
+        <ApplicationIcon>Assets\atriangy.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,6 +33,7 @@
         <PackageReference Include="HanumanInstitute.MvvmDialogs.Avalonia.MessageBox" Version="2.1.0" />
         <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.2.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,5 +44,20 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Waifu2x.Core\Waifu2x.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Settings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Settings.settings</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Settings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      </None>
     </ItemGroup>
 </Project>
