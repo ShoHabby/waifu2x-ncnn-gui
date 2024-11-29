@@ -1,33 +1,15 @@
-using System;
-using Avalonia.Controls;
-using Avalonia.Controls.Templates;
+using HanumanInstitute.MvvmDialogs.Avalonia;
 using Waifu2x.Core.ViewModels;
-using Waifu2x.ViewsModels;
+using Waifu2x.Views;
 
 namespace Waifu2x;
 
-public class ViewLocator : IDataTemplate
+public class ViewLocator : StrongViewLocator
 {
-    public Control? Build(object? param)
+    public ViewLocator()
     {
-        Type? paramType = param?.GetType();
-        if (paramType?.FullName is null) return null;
-
-        ReadOnlySpan<char> fullTypeSpan = paramType.FullName;
-        if (fullTypeSpan.EndsWith("ViewModel", StringComparison.Ordinal))
-        {
-            fullTypeSpan = fullTypeSpan[..^9];
-        }
-
-        string fullTypeName = fullTypeSpan.ToString();
-        Type? type = Type.GetType(fullTypeName) ?? Type.GetType(fullTypeName + "View");
-        if (type is not null)
-        {
-            return Activator.CreateInstance(type) as Control;
-        }
-
-        return new TextBlock { Text = "Not Found: " + fullTypeName };
+        Register<MainWindowViewModel, MainWindow>();
+        Register<FileGroupViewModel, FileGroup>();
+        Register<SettingsGroupViewModel, SettingsGroup>();
     }
-
-    public bool Match(object? data) => data is ViewModelBase;
 }

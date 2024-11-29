@@ -2,24 +2,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Waifu2x.ViewsModels;assembly=Waifu2x.Core"
         xmlns:v="clr-namespace:Waifu2x.Views"
-        xmlns:viewModels="clr-namespace:Waifu2x.Core.ViewModels;assembly=Waifu2x.Core"
+        xmlns:vm="clr-namespace:Waifu2x.Core.ViewModels;assembly=Waifu2x.Core"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
         MinWidth="650" MinHeight="700" Padding="2"
         x:CompileBindings="True"
         x:Class="Waifu2x.Views.MainWindow"
-        x:DataType="viewModels:MainWindowViewModel"
+        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/atriangy.ico"
         Title="Waifu2x.App">
 
     <!-- Designer only -->
     <Design.DataContext>
-        <viewModels:MainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Design.DataContext>
 
     <DockPanel Name="Root" Margin="5" >
-        <v:FilesGroup DockPanel.Dock="Top" DataContext="{Binding FileGroupViewModel}" />
+        <v:FileGroup DockPanel.Dock="Top" DataContext="{Binding FileGroupViewModel}" />
 
         <v:SettingsGroup DockPanel.Dock="Top" DataContext="{Binding SettingsGroupViewModel}" />
 

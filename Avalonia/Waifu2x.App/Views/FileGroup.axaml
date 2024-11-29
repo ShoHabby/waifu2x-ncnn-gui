@@ -2,16 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:Waifu2x.ViewsModels;assembly=Waifu2x.Core"
              xmlns:gb="using:GroupBox.Avalonia.Controls"
-             xmlns:viewModels="clr-namespace:Waifu2x.Core.ViewModels;assembly=Waifu2x.Core"
+             xmlns:vm="clr-namespace:Waifu2x.Core.ViewModels;assembly=Waifu2x.Core"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Waifu2x.Views.FilesGroup"
-             x:DataType="viewModels:FileGroupViewModel">
+             x:Class="Waifu2x.Views.FileGroup"
+             x:DataType="vm:FileGroupViewModel">
 
     <!-- Designer only -->
     <Design.DataContext>
-        <viewModels:FileGroupViewModel/>
+        <vm:FileGroupViewModel/>
     </Design.DataContext>
 
     <gb:GroupBox Header="Files" Theme="{StaticResource GroupBoxClassic}">

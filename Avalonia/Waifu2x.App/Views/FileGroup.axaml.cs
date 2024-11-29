@@ -2,9 +2,9 @@
 
 namespace Waifu2x.Views;
 
-public partial class SettingsGroup : ContentControl
+public partial class FileGroup : ContentControl
 {
-    public SettingsGroup()
+    public FileGroup()
     {
         InitializeComponent();
     }

@@ -6,7 +6,7 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <LangVersion>13</LangVersion>
+        <LangVersion>preview</LangVersion>
         <RootNamespace>Waifu2x</RootNamespace>
         <PackageId>Waifu2x.App</PackageId>
     </PropertyGroup>
@@ -27,6 +27,9 @@
         </PackageReference>
         <PackageReference Include="BinToss.GroupBox.Avalonia" Version="1.0.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+        <PackageReference Include="HanumanInstitute.MvvmDialogs" Version="2.1.0" />
+        <PackageReference Include="HanumanInstitute.MvvmDialogs.Avalonia" Version="2.1.0" />
+        <PackageReference Include="HanumanInstitute.MvvmDialogs.Avalonia.MessageBox" Version="2.1.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 

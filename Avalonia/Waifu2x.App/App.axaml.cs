@@ -4,12 +4,13 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.Avalonia;
 using Microsoft.Extensions.DependencyInjection;
+using Waifu2x.Core.Services;
 using Waifu2x.Core.ViewModels;
 using Waifu2x.Services;
 using Waifu2x.Views;
-using Waifu2x.ViewsModels;
-using Waifu2x.ViewsModels.Services;
 
 namespace Waifu2x;
 
@@ -29,7 +30,14 @@ public class App : Application
             DisableAvaloniaDataAnnotationValidation();
 
             ServiceCollection services = new();
-            services.AddSingleton<IFileDialogService, FileDialogService>();
+            services.AddSingleton<IDialogService, DialogService>(provider =>
+            {
+                IViewLocator locator = new ViewLocator();
+                IDialogFactory dialogFactory = new DialogFactory().AddMessageBox();
+                return new DialogService(new DialogManager(locator, dialogFactory));
+            });
+
+            services.AddSingleton<IStorageService, StorageService>();
             services.AddTransient<FileGroupViewModel>();
             services.AddTransient<SettingsGroupViewModel>();
             services.AddTransient<MainWindowViewModel>();

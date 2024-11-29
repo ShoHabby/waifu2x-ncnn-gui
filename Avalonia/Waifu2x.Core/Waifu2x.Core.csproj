@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.2.1" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+      <PackageReference Include="HanumanInstitute.MvvmDialogs" Version="2.1.0" />
     </ItemGroup>
 
 </Project>
