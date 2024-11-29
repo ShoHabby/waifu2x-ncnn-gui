@@ -7,11 +7,11 @@ using Waifu2x.Core.Services;
 
 namespace Waifu2x.Core.ViewModels;
 
-public partial class MainWindowViewModel(IStorageService storageService, IDialogService dialogService) : ViewModelBase
+public partial class MainWindowViewModel(IStorageService storageService, IDialogService dialogService, IUpscalerService upscalerService) : ViewModelBase
 {
     public ObservableCollection<string> Log { get; } = [];
 
-    public MainWindowViewModel() : this(null!, null!) { }
+    public MainWindowViewModel() : this(null!, null!, null!) { }
 
     [ObservableProperty]
     private bool isEnabled = true;
@@ -81,19 +81,37 @@ public partial class MainWindowViewModel(IStorageService storageService, IDialog
                                        : await ValidateIO(new FileInfo(this.InputPath!), new FileInfo(this.OutputPath));
             if (valid)
             {
-                await RunWaifu();
+                await RunUpscale();
             }
         }
-        catch (ArgumentException exception)
+        catch (Exception exception)
         {
-            await dialogService.ShowMessageBoxAsync(this, $"The selected path has invalid characters.\nError: {exception.Message}", "Error", icon: MessageBoxImage.Error);
+            await dialogService.ShowMessageBoxAsync(this, "Invalid path detected.\nError: " + exception.Message, "Error", icon: MessageBoxImage.Error);
         }
     }
 
-    private async Task RunWaifu()
+    private async Task RunUpscale()
     {
+        UpscaleOptions upscaleOptions = new()
+        {
+            InputPath        = this.InputPath!,
+            OutputPath       = this.OutputPath,
+            ScaleFactor      = this.Scale,
+            DenoiseLevel     = this.DenoiseLevel,
+            Format           = this.Format,
+            ConvertGrayscale = this.Grayscale,
+            TTAMode          = this.TtaMode,
+
+            ThreadOptions = new ThreadOptions
+            {
+                DecodeThreads  = this.DecodeThreads,
+                UpscaleThreads = this.UpscaleThreads,
+                EncodeThreads  = this.EncodeThreads
+            }
+        };
+
         this.IsEnabled = false;
-        await Task.Delay(1000);
+        await upscalerService.RunUpscaler(upscaleOptions);
         this.IsEnabled = true;
     }
 }
