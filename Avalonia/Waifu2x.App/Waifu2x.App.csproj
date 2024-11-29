@@ -10,6 +10,13 @@
         <RootNamespace>Waifu2x</RootNamespace>
         <PackageId>Waifu2x.App</PackageId>
         <ApplicationIcon>Assets\atriangy.ico</ApplicationIcon>
+        <AssemblyVersion>0.1.*</AssemblyVersion>
+        <FileVersion>0.1.0.0</FileVersion>
+        <Deterministic>false</Deterministic>
+        <AssemblyName>Waifu2x</AssemblyName>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>none</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
@@ -59,5 +66,11 @@
         <Generator>SettingsSingleFileGenerator</Generator>
         <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="dist\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>
