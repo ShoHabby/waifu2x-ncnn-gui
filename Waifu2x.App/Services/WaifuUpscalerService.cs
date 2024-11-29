@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ public class WaifuUpscalerService : IUpscalerService
     /// Program argument StringBuilder
     /// </summary>
     private static readonly StringBuilder ArgumentBuilder = new();
+    /// <summary>
+    /// Path to the external upscaler tool
+    /// </summary>
+    private static readonly string ExternalToolPath = OperatingSystem.IsWindows() ? @"dist\waifu2x-ncnn-vulkan.exe" : @"dist\waifu2x-ncnn-vulkan";
 
     /// <inheritdoc cref="IUpscalerService.RunUpscaler"/>
     public async Task RunUpscaler(UpscaleOptions options)
@@ -39,9 +44,9 @@ public class WaifuUpscalerService : IUpscalerService
             EnableRaisingEvents = true,
             StartInfo = new ProcessStartInfo
             {
-                FileName               = Path.GetFullPath(@"dist\waifu2x-ncnn-vulkan.exe"),
-                Arguments              = GetArguments(options),
-                UseShellExecute        = false,
+                FileName        = Path.GetFullPath(ExternalToolPath),
+                Arguments       = GetArguments(options),
+                UseShellExecute = false,
             }
         };
 
