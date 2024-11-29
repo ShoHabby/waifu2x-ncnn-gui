@@ -36,13 +36,13 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\")]
-        public string Input {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string InputPath {
             get {
-                return ((string)(this["Input"]));
+                return ((string)(this["InputPath"]));
             }
             set {
-                this["Input"] = value;
+                this["InputPath"] = value;
             }
         }
         
@@ -60,55 +60,79 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int ScaleIndex {
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int Scale {
             get {
-                return ((int)(this["ScaleIndex"]));
+                return ((int)(this["Scale"]));
             }
             set {
-                this["ScaleIndex"] = value;
+                this["Scale"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int DenoiseIndex {
+        public int DenoiseLevel {
             get {
-                return ((int)(this["DenoiseIndex"]));
+                return ((int)(this["DenoiseLevel"]));
             }
             set {
-                this["DenoiseIndex"] = value;
+                this["DenoiseLevel"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int FormatIndex {
+        [global::System.Configuration.DefaultSettingValueAttribute("PNG")]
+        public global::Waifu2x.Core.Services.UpscaleFormat Format {
             get {
-                return ((int)(this["FormatIndex"]));
+                return ((global::Waifu2x.Core.Services.UpscaleFormat)(this["Format"]));
             }
             set {
-                this["FormatIndex"] = value;
+                this["Format"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
-        public int Width {
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int DecodeThreads {
             get {
-                return ((int)(this["Width"]));
+                return ((int)(this["DecodeThreads"]));
             }
             set {
-                this["Width"] = value;
+                this["DecodeThreads"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int UpscaleThreads {
+            get {
+                return ((int)(this["UpscaleThreads"]));
+            }
+            set {
+                this["UpscaleThreads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int EncodeThreads {
+            get {
+                return ((int)(this["EncodeThreads"]));
+            }
+            set {
+                this["EncodeThreads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool Grayscale {
             get {
                 return ((bool)(this["Grayscale"]));
@@ -120,61 +144,37 @@ namespace Waifu2x {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("850")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TtaMode {
+            get {
+                return ((bool)(this["TtaMode"]));
+            }
+            set {
+                this["TtaMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("650")]
+        public int Width {
+            get {
+                return ((int)(this["Width"]));
+            }
+            set {
+                this["Width"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("700")]
         public int Height {
             get {
                 return ((int)(this["Height"]));
             }
             set {
                 this["Height"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TTA {
-            get {
-                return ((bool)(this["TTA"]));
-            }
-            set {
-                this["TTA"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int Decode {
-            get {
-                return ((int)(this["Decode"]));
-            }
-            set {
-                this["Decode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int Upscale {
-            get {
-                return ((int)(this["Upscale"]));
-            }
-            set {
-                this["Upscale"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
-        public int Encode {
-            get {
-                return ((int)(this["Encode"]));
-            }
-            set {
-                this["Encode"] = value;
             }
         }
     }
