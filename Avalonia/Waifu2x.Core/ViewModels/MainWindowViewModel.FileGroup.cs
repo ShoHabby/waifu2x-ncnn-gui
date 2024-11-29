@@ -20,18 +20,20 @@ public partial class MainWindowViewModel
             AppleUniformTypeIdentifiers = ["public.jpeg", "public.png", "org.webmproject.webp"],
             MimeTypes                   = ["image/jpeg", "image/png", "image/webp"]
         };
-
         AllowedFiles = new ReadOnlyCollection<FileFilter>([filter]);
     }
 
     [ObservableProperty]
     private bool isFolder = true;
 
-    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunWaifuCommand))]
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunRequestedCommand))]
     private string? inputPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunWaifuCommand))]
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(RunRequestedCommand))]
     private string outputSuffix = "_waifu";
+
+    private string OutputPath => this.IsFolder ? this.InputPath + this.OutputSuffix
+                                               : $"{Path.GetFileNameWithoutExtension(this.InputPath)}{this.OutputSuffix}.{this.Format}";
 
     [RelayCommand]
     private async Task Browse()

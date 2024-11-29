@@ -58,18 +58,17 @@ internal class StorageService : IStorageService
 
         IStorageFolder? startFolder = null;
         DirectoryInfo directory = new(path);
-        if (!directory.Exists)
+        if (directory.Exists)
+        {
+            startFolder = await StorageProvider.TryGetFolderFromPathAsync(directory.Parent?.FullName ?? directory.FullName);
+        }
+        else
         {
             FileInfo file = new(path);
             if (file.Exists)
             {
-                directory = file.Directory!;
+                startFolder = await StorageProvider.TryGetFolderFromPathAsync(file.Directory!.Parent?.FullName ?? file.Directory.FullName);
             }
-        }
-
-        if (directory.Exists)
-        {
-            startFolder = await StorageProvider.TryGetFolderFromPathAsync(directory.Parent?.FullName ?? directory.FullName);
         }
 
         return startFolder?.ToDialog();

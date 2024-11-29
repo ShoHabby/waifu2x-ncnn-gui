@@ -20,7 +20,8 @@
     <DockPanel Name="Root" Margin="5" >
         <!-- Files group -->
         <gb:GroupBox DockPanel.Dock="Top"
-                     Header="Files" Theme="{StaticResource GroupBoxClassic}">
+                     Header="Files" IsEnabled="{Binding IsEnabled}"
+                     Theme="{StaticResource GroupBoxClassic}">
             <StackPanel Spacing="5" Margin="5">
                 <!-- File/Folder selector -->
                 <TextBlock Text="Input Type" Padding="5" />
@@ -45,7 +46,8 @@
 
         <!-- Settings group -->
         <gb:GroupBox DockPanel.Dock="Top"
-                     Header="Settings" Theme="{StaticResource GroupBoxClassic}">
+                     Header="Settings" IsEnabled="{Binding IsEnabled}"
+                     Theme="{StaticResource GroupBoxClassic}">
             <Grid RowDefinitions="auto, auto, auto, auto, auto"
                   ColumnDefinitions="200, 200, 200"
                   Margin="5">
@@ -119,7 +121,7 @@
 
         <!-- Run button -->
         <Button DockPanel.Dock="Bottom"
-                Command="{Binding RunWaifuCommand}"
+                Command="{Binding RunRequestedCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
             <TextBlock Text="Run" FontSize="24" FontWeight="Bold"/>
         </Button>
