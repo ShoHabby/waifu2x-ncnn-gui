@@ -25,6 +25,7 @@ Support for these may be added upon request.
 
 ## Dependencies
 - [Avalonia](https://github.com/AvaloniaUI/Avalonia?tab=MIT-1-ov-file)
+- [waifu2x-ncnn-vulkan](https://github.com/nihui/waifu2x-ncnn-vulkan)
 - [GroupBox.Avalonia](https://github.com/BinToss/GroupBox.Avalonia)
 - [HanumanInstitude.MvvmDialogs](https://github.com/mysteryx93/HanumanInstitute.MvvmDialogs)
 - [Magick.NET](https://github.com/dlemstra/Magick.NET?tab=Apache-2.0-1-ov-file)
