@@ -6,8 +6,5 @@ namespace Waifu2x;
 
 public class ViewLocator : StrongViewLocator
 {
-    public ViewLocator()
-    {
-        Register<MainWindowViewModel, MainWindow>();
-    }
+    public ViewLocator() => Register<MainWindowViewModel, MainWindow>();
 }

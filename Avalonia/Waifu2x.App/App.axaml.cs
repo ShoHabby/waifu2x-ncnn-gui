@@ -16,10 +16,7 @@ namespace Waifu2x;
 
 public class App : Application
 {
-    public override void Initialize()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public override void OnFrameworkInitializationCompleted()
     {
@@ -36,7 +33,6 @@ public class App : Application
                 IDialogFactory dialogFactory = new DialogFactory().AddMessageBox();
                 return new DialogService(new DialogManager(locator, dialogFactory), provider.GetRequiredService);
             });
-
             services.AddSingleton<IStorageService, StorageService>();
             services.AddTransient<MainWindowViewModel>();
 

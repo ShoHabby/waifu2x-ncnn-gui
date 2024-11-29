@@ -2,7 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:v="clr-namespace:Waifu2x.Views"
         xmlns:vm="clr-namespace:Waifu2x.Core.ViewModels;assembly=Waifu2x.Core"
         xmlns:gb="using:GroupBox.Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="700"
@@ -23,12 +22,14 @@
         <gb:GroupBox DockPanel.Dock="Top"
                      Header="Files" Theme="{StaticResource GroupBoxClassic}">
             <StackPanel Spacing="5" Margin="5">
+                <!-- File/Folder selector -->
                 <TextBlock Text="Input Type" Padding="5" />
                 <StackPanel Orientation="Horizontal" Spacing="10" Margin="5 0">
                     <RadioButton GroupName="InputType" Content="Folder" IsChecked="{Binding IsFolder}" />
                     <RadioButton GroupName="InputType" Content="Files" />
                 </StackPanel>
 
+                <!-- File/Folder input field -->
                 <TextBlock Text="Input" Padding="5" />
                 <TextBox Text="{Binding InputPath}">
                     <TextBox.InnerLeftContent>
@@ -36,6 +37,7 @@
                     </TextBox.InnerLeftContent>
                 </TextBox>
 
+                <!-- Output suffix field -->
                 <TextBlock Text="Output Suffix" Padding="5" />
                 <TextBox Text="{Binding OutputSuffix}"/>
             </StackPanel>
@@ -47,6 +49,7 @@
             <Grid RowDefinitions="auto, auto, auto, auto, auto"
                   ColumnDefinitions="200, 200, 200"
                   Margin="5">
+                <!-- Scale selector -->
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Scale" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="0"
@@ -54,6 +57,7 @@
                           SelectedItem="{Binding Scale}"
                           Width="180" Margin="5 0" />
 
+                <!-- Denoise selector -->
                 <TextBlock Grid.Row="0" Grid.Column="1"
                            Text="Denoise Level" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="1"
@@ -61,6 +65,7 @@
                           SelectedIndex="{Binding DenoiseLevel}"
                           Width="180" Margin="5 0" />
 
+                <!-- Format selector -->
                 <TextBlock Grid.Row="0" Grid.Column="2"
                            Text="Format" Margin="5" />
                 <ComboBox Grid.Row="1" Grid.Column="2"
@@ -68,6 +73,7 @@
                           SelectedItem="{Binding Format}"
                           Width="180" Margin="5 0" />
 
+                <!-- Decode threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="0"
                            Text="Decode Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="0"
@@ -77,6 +83,7 @@
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0"/>
 
+                <!-- Upscale threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Text="Upscale Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="1"
@@ -86,6 +93,7 @@
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
+                <!-- Encode threads selector -->
                 <TextBlock Grid.Row="2" Grid.Column="2"
                            Text="Encode Threads" Margin="5" />
                 <NumericUpDown Grid.Row="3" Grid.Column="2"
@@ -95,6 +103,7 @@
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
+                <!-- Che ckboxes -->
                 <CheckBox Grid.Row="4" Grid.Column="0"
                           IsChecked="{Binding Grayscale}"
                           Content="Convert to Grayscale" Margin="5" />
@@ -104,15 +113,19 @@
             </Grid>
         </gb:GroupBox>
 
+        <!-- Progress bar -->
         <ProgressBar DockPanel.Dock="Bottom"
                      Height="30" Margin="0 5"/>
 
+        <!-- Run button -->
         <Button DockPanel.Dock="Bottom"
                 Command="{Binding RunWaifuCommand}"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
             <TextBlock Text="Run" FontSize="24" FontWeight="Bold"/>
         </Button>
 
+
+        <!-- Log output -->
         <Border BorderBrush="{DynamicResource SystemAccentColor}"
                 Background="{DynamicResource SystemBaseLowColor}"
                 CornerRadius="2" BorderThickness="1"
