@@ -7,6 +7,7 @@
         <AssemblyVersion>0.1.*</AssemblyVersion>
         <FileVersion>0.1.0.0</FileVersion>
         <Deterministic>false</Deterministic>
+        <RuntimeIdentifiers>win-x64;osx-x64;osx-arm64;linux-x64</RuntimeIdentifiers>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -17,6 +18,7 @@
       <PackageReference Include="Avalonia" Version="11.2.1" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
       <PackageReference Include="HanumanInstitute.MvvmDialogs" Version="2.1.0" />
+      <PackageReference Include="System.Private.Uri" Version="4.3.2" />
     </ItemGroup>
 
 </Project>
