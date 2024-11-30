@@ -86,7 +86,7 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
         if (output.Exists)
         {
             bool? result = await this.dialogService.ShowMessageBoxAsync(this, $"The output {type} already exists, overwrite file(s)?", "Warning",
-                                                                         button: MessageBoxButton.OkCancel, MessageBoxImage.Error);
+                                                                        button: MessageBoxButton.OkCancel, icon: MessageBoxImage.Error);
             return result is not null;
         }
 
