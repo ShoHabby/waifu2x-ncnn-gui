@@ -28,10 +28,20 @@ public class WaifuUpscalerService : IUpscalerService
     /// Program argument StringBuilder
     /// </summary>
     private static readonly StringBuilder ArgumentBuilder = new();
+
+
+    /// <summary>
+    /// Folder name in which third party tools are distributed
+    /// </summary>
+    private const string DISTRIBUTION_FOLDER = "dist";
+    /// <summary>
+    /// Waifu upscaler executable file name
+    /// </summary>
+    private const string EXECUTABLE_NAME = "waifu2x-ncnn-vulkan";
     /// <summary>
     /// Path to the external upscaler tool
     /// </summary>
-    private static readonly string ExternalToolPath = OperatingSystem.IsWindows() ? @"dist\waifu2x-ncnn-vulkan.exe" : @"dist\waifu2x-ncnn-vulkan";
+    private static readonly string ExternalToolPath = Path.Join(DISTRIBUTION_FOLDER, EXECUTABLE_NAME) + (OperatingSystem.IsWindows() ? ".exe" : string.Empty);
 
     /// <inheritdoc cref="IUpscalerService.RunUpscaler"/>
     public async Task RunUpscaler(UpscaleOptions options)
@@ -41,7 +51,6 @@ public class WaifuUpscalerService : IUpscalerService
         // Create process
         Process waifuProcess = new()
         {
-            EnableRaisingEvents = true,
             StartInfo = new ProcessStartInfo
             {
                 FileName        = Path.GetFullPath(ExternalToolPath),
@@ -67,7 +76,7 @@ public class WaifuUpscalerService : IUpscalerService
     /// Starts the grayscale conversion operation
     /// </summary>
     /// <param name="options">The upscaling options</param>
-    private async Task RunGrayscaleConversion(UpscaleOptions options)
+    private static async Task RunGrayscaleConversion(UpscaleOptions options)
     {
         Log("Converting images to grayscale...");
 
