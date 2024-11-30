@@ -1,7 +1,7 @@
 # Waifu2x NCNN GUI
 
 This is a simple cross-platform GUI for interacting with [Waifu2x NCNN](https://github.com/nihui/waifu2x-ncnn-vulkan).
-The application is developped with Avalonia on .NET 9.0 and is published for win-x64, linux-x64, osx-x64, and osx-arm64.
+The application is developped with Avalonia on .NET 9.0 and is published for Windows, Linux, and MacOS Intel/Apple, and osx-arm64.
 I do not have a test setup for the Linux and OSX version, so bugs and other issues may be present.
 
 ![image](https://github.com/user-attachments/assets/047b68fe-7e2c-4468-8095-5ffd1a04425d)
