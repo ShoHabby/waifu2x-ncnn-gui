@@ -66,19 +66,16 @@ public class WaifuUpscalerService : IUpscalerService
 
         Log("Waifu process completed");
 
-        if (options.ConvertGrayscale)
-        {
-            await RunGrayscaleConversion(options);
-        }
+        await RunFileProcessing(options);
     }
 
     /// <summary>
     /// Starts the grayscale conversion operation
     /// </summary>
     /// <param name="options">The upscaling options</param>
-    private static async Task RunGrayscaleConversion(UpscaleOptions options)
+    private static async Task RunFileProcessing(UpscaleOptions options)
     {
-        Log("Converting images to grayscale...");
+        Log("Processing upscaled files...");
 
         // Check if we are targeting a folder or file
         bool isFolder = (File.GetAttributes(options.OutputPath) & FileAttributes.Directory) is not 0;
@@ -87,14 +84,14 @@ public class WaifuUpscalerService : IUpscalerService
             DirectoryInfo outputDir = new(options.OutputPath);
             FileInfo[] files = outputDir.GetFiles($"*.{options.Format}");
             StrongReferenceMessenger.Default.Send(new ReportProgressMessage(files.Length));
-            await Parallel.ForEachAsync(files, (f, _) => ConvertToGrayAsync(f, options.Format));
+            await Parallel.ForEachAsync(files, (f, _) => ProcessFileAsync(f, options.Format, options.ConvertGrayscale));
         }
         else
         {
-            await ConvertToGrayAsync(new FileInfo(options.OutputPath), options.Format);
+            await ProcessFileAsync(new FileInfo(options.OutputPath), options.Format, options.ConvertGrayscale);
         }
 
-        Log("Grayscale conversion completed");
+        Log("All files processed");
     }
 
     /// <summary>
@@ -102,28 +99,37 @@ public class WaifuUpscalerService : IUpscalerService
     /// </summary>
     /// <param name="file">File to convert</param>
     /// <param name="format">Output file format</param>
+    /// <param name="grayscale">If the files should be converted to grayscale</param>
     /// <returns>The conversion task</returns>
     /// <exception cref="UnreachableException">If <paramref name="format"/> is unknown</exception>
-    private static ValueTask ConvertToGrayAsync(FileInfo file, UpscaleFormat format)
+    private static ValueTask ProcessFileAsync(FileInfo file, UpscaleFormat format, bool grayscale)
     {
         // Load image and set format
         using MagickImage image = new(file);
-        image.Grayscale(PixelIntensityMethod.Average);
-        image.SetBitDepth(8u);
+        image.Density = new Density(72d, DensityUnit.PixelsPerInch);
         image.Format = format switch
         {
-            UpscaleFormat.PNG  => MagickFormat.Png8,
-            UpscaleFormat.JPG  => MagickFormat.Jpg,
-            UpscaleFormat.WEBP => MagickFormat.WebP,
-            _                  => throw new UnreachableException("Invalid format")
+            UpscaleFormat.PNG when grayscale => MagickFormat.Png8,
+            UpscaleFormat.PNG                => MagickFormat.Png24,
+            UpscaleFormat.JPG                => MagickFormat.Jpg,
+            UpscaleFormat.WEBP               => MagickFormat.WebP,
+            _                                => throw new UnreachableException("Invalid format")
         };
-        image.Settings.Compression = CompressionMethod.NoCompression;
+        if (grayscale)
+        {
+            // Set grayscale settings
+            image.Grayscale(PixelIntensityMethod.Average);
+            image.SetBitDepth(8u);
+            image.Settings.Compression = CompressionMethod.NoCompression;
 
-        // Convert to grayscale table
-        image.Quantize(GrayscaleSettings);
+            // Quantize to grayscale
+            image.Quantize(GrayscaleSettings);
+        }
+
+        // Save image
         image.Write(file);
 
-        Log(file.FullName + " converted to grayscale");
+        Log(file.FullName + " processed");
         StrongReferenceMessenger.Default.Send(new ReportProgressMessage());
         return ValueTask.CompletedTask;
     }
