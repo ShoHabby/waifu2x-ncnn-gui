@@ -49,7 +49,7 @@
         <gb:GroupBox DockPanel.Dock="Top"
                      Header="Settings" IsEnabled="{Binding IsEnabled}"
                      Theme="{StaticResource GroupBoxClassic}">
-            <Grid RowDefinitions="auto, auto, auto, auto, auto"
+            <Grid RowDefinitions="auto, auto, auto, auto, auto, auto, auto"
                   ColumnDefinitions="200, 200, 200"
                   Margin="5">
                 <!-- Scale selector -->
@@ -124,17 +124,35 @@
                                HorizontalAlignment="Left"
                                Width="180" Margin="5 0" />
 
+                <!-- PPI Selector -->
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           ToolTip.Tip="File PPI"
+                           Text="File PPI" Margin="5" />
+                <NumericUpDown Grid.Row="5" Grid.Column="0"
+                               Name="Ppi"
+                               Increment="1" Minimum="1"
+                               FormatString="N0" ParsingNumberStyle="Integer"
+                               Value="{Binding Ppi}"
+                               ToolTip.Tip="File PPI"
+                               HorizontalAlignment="Left"
+                               Width="180" Margin="5 0" />
+
                 <!-- Checkboxes -->
-                <CheckBox Grid.Row="4" Grid.Column="0"
+                <CheckBox Grid.Row="6" Grid.Column="0"
                           Name="Grayscale"
                           IsChecked="{Binding Grayscale}"
                           ToolTip.Tip="Converts files to grayscale after upscaling them"
                           Content="Convert to Grayscale" Margin="5" />
-                <CheckBox Grid.Row="4" Grid.Column="1"
+                <CheckBox Grid.Row="6" Grid.Column="1"
                           Name="TtaMode"
                           IsChecked="{Binding TtaMode}"
                           ToolTip.Tip="TTA Mode may produce higher quality result at the cost of upscaling the file eight times"
                           Content="TTA Mode" Margin="5" />
+                <CheckBox Grid.Row="6" Grid.Column="2"
+                          Name="RemoveAlpha"
+                          IsChecked="{Binding RemoveAlpha}"
+                          ToolTip.Tip="If the file should be saved without the alpha channel"
+                          Content="Remove Alpha" Margin="5" />
             </Grid>
         </gb:GroupBox>
 
