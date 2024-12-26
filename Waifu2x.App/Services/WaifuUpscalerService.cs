@@ -66,19 +66,16 @@ public class WaifuUpscalerService : IUpscalerService
 
         Log("Waifu process completed");
 
-        if (options.ConvertGrayscale)
-        {
-            await RunGrayscaleConversion(options);
-        }
+        await RunFileProcessing(options);
     }
 
     /// <summary>
     /// Starts the grayscale conversion operation
     /// </summary>
     /// <param name="options">The upscaling options</param>
-    private static async Task RunGrayscaleConversion(UpscaleOptions options)
+    private static async Task RunFileProcessing(UpscaleOptions options)
     {
-        Log("Converting images to grayscale...");
+        Log("Processing upscaled files...");
 
         // Check if we are targeting a folder or file
         bool isFolder = (File.GetAttributes(options.OutputPath) & FileAttributes.Directory) is not 0;
@@ -87,43 +84,65 @@ public class WaifuUpscalerService : IUpscalerService
             DirectoryInfo outputDir = new(options.OutputPath);
             FileInfo[] files = outputDir.GetFiles($"*.{options.Format}");
             StrongReferenceMessenger.Default.Send(new ReportProgressMessage(files.Length));
-            await Parallel.ForEachAsync(files, (f, _) => ConvertToGrayAsync(f, options.Format));
+            await Parallel.ForEachAsync(files, (f, _) => ProcessFileAsync(f, options));
         }
         else
         {
-            await ConvertToGrayAsync(new FileInfo(options.OutputPath), options.Format);
+            await ProcessFileAsync(new FileInfo(options.OutputPath), options);
         }
 
-        Log("Grayscale conversion completed");
+        Log("All files processed");
     }
 
     /// <summary>
     /// Converts an image to Grayscale
     /// </summary>
     /// <param name="file">File to convert</param>
-    /// <param name="format">Output file format</param>
+    /// <param name="options">File options</param>
     /// <returns>The conversion task</returns>
-    /// <exception cref="UnreachableException">If <paramref name="format"/> is unknown</exception>
-    private static ValueTask ConvertToGrayAsync(FileInfo file, UpscaleFormat format)
+    /// <exception cref="UnreachableException">If the options format is unknown</exception>
+    private static ValueTask ProcessFileAsync(FileInfo file, in UpscaleOptions options)
     {
         // Load image and set format
         using MagickImage image = new(file);
-        image.Grayscale(PixelIntensityMethod.Average);
-        image.SetBitDepth(8u);
-        image.Format = format switch
+        image.Format = options.Format switch
         {
-            UpscaleFormat.PNG  => MagickFormat.Png8,
-            UpscaleFormat.JPG  => MagickFormat.Jpg,
-            UpscaleFormat.WEBP => MagickFormat.WebP,
-            _                  => throw new UnreachableException("Invalid format")
+            UpscaleFormat.PNG when options.ConvertGrayscale               => MagickFormat.Png8,
+            UpscaleFormat.PNG when options.RemoveAlpha || !image.HasAlpha => MagickFormat.Png24,
+            UpscaleFormat.PNG                                             => MagickFormat.Png32,
+            UpscaleFormat.JPG                                             => MagickFormat.Jpg,
+            UpscaleFormat.WEBP                                            => MagickFormat.WebP,
+            _                                                             => throw new UnreachableException("Invalid format")
         };
-        image.Settings.Compression = CompressionMethod.NoCompression;
 
-        // Convert to grayscale table
-        image.Quantize(GrayscaleSettings);
+        // Set PPI
+        image.Density = new Density(options.PPI, DensityUnit.PixelsPerInch);
+
+        // Remove alpha as needed
+        if (options.RemoveAlpha && image.HasAlpha)
+        {
+            // Force set background to black
+            image.BackgroundColor = MagickColors.Black;
+            image.Alpha(AlphaOption.Remove);
+        }
+
+        // Convert to grayscale if needed
+        if (options.ConvertGrayscale)
+        {
+            // Set grayscale settings
+            image.Grayscale(PixelIntensityMethod.Average);
+            image.SetBitDepth(8u);
+            image.Settings.Compression = CompressionMethod.NoCompression;
+
+            // Quantize to grayscale
+            image.Quantize(GrayscaleSettings);
+        }
+
+        // Save image
         image.Write(file);
 
-        Log(file.FullName + " converted to grayscale");
+        // Terminate and report
+        Log(file.FullName + " processed");
         StrongReferenceMessenger.Default.Send(new ReportProgressMessage());
         return ValueTask.CompletedTask;
     }

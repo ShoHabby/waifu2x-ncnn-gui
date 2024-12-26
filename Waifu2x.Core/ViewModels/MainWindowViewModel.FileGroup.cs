@@ -12,7 +12,7 @@ public partial class MainWindowViewModel
     private static readonly ReadOnlyCollection<FileFilter> AllowedFiles = new([new FileFilter
     {
         Name                        = "Images",
-        Extensions                  = ["jpg", "png", "webp"],
+        Extensions                  = ["jpg", "jpeg", "png", "webp"],
         AppleUniformTypeIdentifiers = ["public.jpeg", "public.png", "org.webmproject.webp"],
         MimeTypes                   = ["image/jpeg", "image/png", "image/webp"]
     }]);

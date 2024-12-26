@@ -30,8 +30,10 @@ public partial class MainWindow : Window
         this.DecodeThreads.Value        =  Settings.Default.DecodeThreads;
         this.UpscaleThreads.Value       =  Settings.Default.UpscaleThreads;
         this.EncodeThreads.Value        =  Settings.Default.EncodeThreads;
+        this.Ppi.Value                  =  Settings.Default.Ppi;
         this.Grayscale.IsChecked        =  Settings.Default.Grayscale;
         this.TtaMode.IsChecked          =  Settings.Default.TtaMode;
+        this.RemoveAlpha.IsChecked      =  Settings.Default.RemoveAlpha;
         this.Width                      =  Settings.Default.Width;
         this.Height                     =  Settings.Default.Height;
         this.Items.PropertyChanged      += ItemsOnPropertyChanged;
@@ -54,8 +56,10 @@ public partial class MainWindow : Window
         Settings.Default.DecodeThreads  = (int?)this.DecodeThreads.Value ?? 2;
         Settings.Default.UpscaleThreads = (int?)this.UpscaleThreads.Value ?? 2;
         Settings.Default.EncodeThreads  = (int?)this.EncodeThreads.Value ?? 2;
+        Settings.Default.Ppi            = (int?)this.EncodeThreads.Value ?? 72;
         Settings.Default.Grayscale      = this.Grayscale.IsChecked ?? false;
         Settings.Default.TtaMode        = this.TtaMode.IsChecked ?? false;
+        Settings.Default.RemoveAlpha    = this.TtaMode.IsChecked ?? false;
         Settings.Default.Width          = (int)Math.Round(this.Width);
         Settings.Default.Height         = (int)Math.Round(this.Height);
         Settings.Default.Save();

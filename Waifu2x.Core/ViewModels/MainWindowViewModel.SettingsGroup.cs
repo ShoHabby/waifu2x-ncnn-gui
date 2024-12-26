@@ -34,7 +34,11 @@ public partial class MainWindowViewModel
     [ObservableProperty]
     private int encodeThreads = 2;
     [ObservableProperty]
+    private int ppi = 72;
+    [ObservableProperty]
     private bool grayscale;
     [ObservableProperty]
     private bool ttaMode;
+    [ObservableProperty]
+    private bool removeAlpha;
 }

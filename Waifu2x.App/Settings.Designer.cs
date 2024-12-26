@@ -177,5 +177,29 @@ namespace Waifu2x {
                 this["Height"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RemoveAlpha {
+            get {
+                return ((bool)(this["RemoveAlpha"]));
+            }
+            set {
+                this["RemoveAlpha"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("72")]
+        public int Ppi {
+            get {
+                return ((int)(this["Ppi"]));
+            }
+            set {
+                this["Ppi"] = value;
+            }
+        }
     }
 }

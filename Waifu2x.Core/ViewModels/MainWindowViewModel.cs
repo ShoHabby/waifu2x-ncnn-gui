@@ -162,8 +162,10 @@ public partial class MainWindowViewModel : ViewModelBase, IRecipient<LogMessage>
                 ScaleFactor      = this.Scale,
                 DenoiseLevel     = this.DenoiseLevel,
                 Format           = this.Format,
+                PPI              = this.Ppi,
                 ConvertGrayscale = this.Grayscale,
                 TTAMode          = this.TtaMode,
+                RemoveAlpha      = this.RemoveAlpha,
 
                 ThreadOptions = new ThreadOptions
                 {

@@ -43,6 +43,12 @@
     <Setting Name="Height" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">700</Value>
     </Setting>
+    <Setting Name="RemoveAlpha" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Ppi" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">72</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
 
