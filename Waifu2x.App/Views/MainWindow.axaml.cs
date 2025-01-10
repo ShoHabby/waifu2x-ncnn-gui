@@ -56,7 +56,7 @@ public partial class MainWindow : Window
         Settings.Default.DecodeThreads  = (int?)this.DecodeThreads.Value ?? 2;
         Settings.Default.UpscaleThreads = (int?)this.UpscaleThreads.Value ?? 2;
         Settings.Default.EncodeThreads  = (int?)this.EncodeThreads.Value ?? 2;
-        Settings.Default.Ppi            = (int?)this.EncodeThreads.Value ?? 72;
+        Settings.Default.Ppi            = (int?)this.Ppi.Value ?? 72;
         Settings.Default.Grayscale      = this.Grayscale.IsChecked ?? false;
         Settings.Default.TtaMode        = this.TtaMode.IsChecked ?? false;
         Settings.Default.RemoveAlpha    = this.TtaMode.IsChecked ?? false;
